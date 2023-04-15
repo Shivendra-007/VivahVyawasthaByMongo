@@ -6,6 +6,7 @@ import serviceRouter from "./routes/service.route.js"
 import feedbackRouter from "./routes/feedback.route.js"
 import favouriteRouter from "./routes/favourite.router.js"
 import requestRouter from "./routes/request.router.js"
+import newMakeupRouter from "./routes/newmakeup.route.js"
 import cors from 'cors';
 const app = express();
 
@@ -22,6 +23,7 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/mak
     });
 
 app.use("/makeup", makeupRouter);
+app.use("/newmakeup", newMakeupRouter);//api complete but in panding in or ...
 app.use("/service", serviceRouter);
 app.use("/feedback", feedbackRouter);
 app.use("/favourite", favouriteRouter);
