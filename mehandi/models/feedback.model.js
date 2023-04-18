@@ -2,17 +2,18 @@ import mongoose from 'mongoose';
 
 const feedbackSchema = new mongoose.Schema({
   customerId: {
-    type: Number,
-    required: true,
-  },
-  photoGrapherId: {
     type: mongoose.Schema.Types.ObjectId, // Use ObjectId type for foreign key
-    required: true,
-    ref: 'stdio', // Referencing stdio collection
+
+    ref: 'mehndi', // Referencing mehndi collection
+  },
+  mehndiId: {
+    type: mongoose.Schema.Types.ObjectId, // Use ObjectId type for foreign key
+
+    ref: 'mehndi', // Referencing mehndi collection
   },
   review: {
     type: String,
-    required: true,
+
   },
 });
 

@@ -3,26 +3,25 @@ import mongoose from 'mongoose';
 const requestSchema = new mongoose.Schema({
   customerName: {
     type: String,
-    required: true,
     unique: true
   },
   contactNumber: {
     type: Number,
-    required: true
+
   },
   totalGeust: {
     type: Number,
-    required: true
+
   },
   customerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
-    required: true
-  },
-  photoGrapherId: {
+    ref: 'customer',
+
+  },//iska jarut ku hai 
+  mehndiId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'stdio',
-    required: true
+    ref: 'mehndi',
+
   },
   requestDate: {
     type: Date,

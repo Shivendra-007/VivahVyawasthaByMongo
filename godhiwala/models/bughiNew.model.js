@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const photoStudioSchema = new mongoose.Schema({
+const bughiSchema = new mongoose.Schema({
     id: { type: Number, required: true },
     name: { type: String, required: true },
     location: { type: String, required: true },
@@ -32,6 +32,6 @@ const photoStudioSchema = new mongoose.Schema({
 });
 
 
-const StdioNew = mongoose.model('stdionew', photoStudioSchema);
+const BughiNew = mongoose.model('bughinew', bughiSchema);
 
-export default StdioNew;
+export default BughiNew;
