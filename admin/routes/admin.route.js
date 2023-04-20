@@ -1,5 +1,5 @@
 import express from 'express';
-import {signin,signup,signout } from "../controller/admin.controller.js";
+import {signin,signup,signout,update,email} from "../controller/admin.controller.js";
 import {body} from "express-validator";
 
 //import { verify } from '../middleware/authenticate.js';
@@ -11,8 +11,9 @@ router.post("/signup",
  body("contact","digit is allowed"),
  body("password","please enter a password"),
  body("password","atleast 4 letter is mendatory"),signup);
- router.post("/signout",signout);  
-router.get("/profile");
-router.get("/edit_profile");
+ router.post("/signout",signout); 
+ router.post("/update",update); 
+ router.post("/email",email);
+
 
 export default router;
