@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const makeupSchema = new mongoose.Schema({
-    companyName: {
+    title: {
         type: String,
         required: true,
       },
@@ -28,31 +28,31 @@ const makeupSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-    license: {
+    longitude: {
         type: String,
         required: true,
       },
-    category: {
-        type: String,
-        required: true,
-      },
-    latitude: {
-        type: String,
-        required: true,
-      },
-    longitude:{
+    laitude:{
         type: String,
         required: true,
       },
     images: [],
+   
+    
     vendorId: {
         type: String,
         required: true,
-      }
+      },
+      status:{
+        type:String,
+        required:true,
+        default:'false'
+    },
 });
 
-const Makeup = mongoose.model('makeup', makeupSchema);
 
-export default Makeup;
+  export const Makeup = mongoose.model('makeup', makeupSchema);
+
+
 
 

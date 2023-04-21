@@ -1,16 +1,23 @@
 import Makeup from "../models/makeup.model.js";
 
 
-export const saveMultiple = (request, response, next) => {
-    Makeup.create(request.body.makeups)
-        .then(result => {
-            console.log(result);
-            return response.status(200).json({ Message: "makeup are saved...", status: true });
-        })
-        .catch(err => {
-            console.log(err);
-            return response.status(500).json({ Message: "Internal Server error...", status: false });
-        })
+export const save=async(request,response,next)=>{
+    try{
+    const errors=await validationResult(request);
+
+    if(!errors.isEmpty())
+     return response.status(400).json({error:"bad request",status:true});
+
+     const makeup=await Makeup.create(request.body);
+      return response.status(200).json({message:"makeup details saved",status:true});
+    }
+    catch(err)
+    {
+        console.log(err);
+        return response.status(500).json({error:"internal server error",status:false});
+    }
+
+
 }
 
 export const viewAll = (request, response, next) => {
@@ -40,24 +47,42 @@ export const search = (request, response, next) => {
     })
 };
 
-export const remove = (request, response, next) => {
-    Makeup.deleteOne({ _id: request.params.id }).then(() => {
-        return response.status(200).json({ message: "makeUp is Removed", status: true });
-    }).catch((err) => {
+export const remove=async(request,response,next)=>{
+    try{
+        let venueDetails=await Makeup.updateOne({_id:request.params.venueDetailsId},{status:"false"})
+        if(venueDetails.modifiedCount)
+        return response.status(200).json({message:"deleted succesfully",status:true});
+        return response.status(400).json({error:"request not found",status:false});
+    }
+    catch(err)
+    {
+        return response.status(500).json({error:"internal server error",status:false});
+    }
+}
 
-        console.log(err)
-        return response.status(500).json({ error: "Internal Server Error", status: false });
-    })
-};
+export const activeList=async(request,response,next)=>{
+    try{
+        let venueDetails=await Makeup.find({status:"true"})
+        return response.status(200).json({venueList:venueDetails,status:true})
+    }
+    catch(err)
+    {
+        return response.status(500).json({error:"internal server error",status:false});
+    }
+}
 
-// export const remove = async (request, response, next) => {
-//     console.log(request.body);
-//     try {
-//        await Makeup.findByIdAndDelete(request.body.id);
-//         return response.status(200).json({ message: "makeup is Removed", status: true });
+export const activate=async(request,response,next)=>{
+    try{
+        let makeup=await Makeup.updateOne({_id:request.body.venueDetailsId},{status:"true"})
+        if(makeup.modifiedCount)
+        return response.status(200).json({message:"venue activate succesfully", status:true});
+        return response.status(400).json({error:"request not found", status:false});
+    }
+    catch(err)
+    {
+        return response.status(500).json({error:"internal server error",status:false});
+    }
+}
 
-//     } catch (err) {
-//         return response.status(500).json({ error: "Internal Server Error", status: false });
-//     }
 
-// }
+

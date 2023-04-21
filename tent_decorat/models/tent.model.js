@@ -32,10 +32,6 @@ const tentSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-    category: {
-        type: String,
-        required: true,
-      },
     latitude: {
         type: String,
         required: true,
@@ -45,6 +41,11 @@ const tentSchema = new mongoose.Schema({
         required: true,
       },
     images: [],
+    service:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"service"
+      
+    },
     vendorId: {
         type: String,
         required: true,

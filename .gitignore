@@ -1,0 +1,4 @@
+node_modules
+./venue/node_modules
+./apperals/node_modules
+./vendor/node_modules
