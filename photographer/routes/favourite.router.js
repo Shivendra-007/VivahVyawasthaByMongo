@@ -1,19 +1,15 @@
 import express from "express";
-import { saveMultiple, remove, viewAll } from "../controller/favourite.controller.js";
+import {  remove, viewAll, addFavourite } from "../controller/favourite.controller.js";
 let router = express.Router();
 
-router.post("/save", saveMultiple);
-router.get("/view", viewAll);
-router.delete("/remove/:id", remove);//done and check...
-// router.get("/search/:date",searchBydate)
+router.post("/save", addFavourite);
+router.post("/viewBycustomer", viewAll);
+router.delete("/remove/:id", remove);
 
 
 export default router;
-/*
-http://localhost:8009/request/save
-http://localhost:8009/request/view
-http://localhost:8009/request/remove/{_id}
- */
+
+
 
 
 

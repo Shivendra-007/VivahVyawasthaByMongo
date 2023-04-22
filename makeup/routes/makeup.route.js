@@ -1,5 +1,5 @@
 import express from "express";
-import { saveMultiple,search,remove, viewAll } from "../controller/makeup.controller.js";
+import { save,search,remove, viewAll } from "../controller/makeup.controller.js";
 import { body } from "express-validator";
 
 const router = express.Router();
@@ -16,7 +16,7 @@ body("license").notEmpty(),
 body("category").notEmpty(),
 body("longitude").notEmpty(),
 body("latitude").notEmpty()
-,saveMultiple);
+,save);
 router.get("/view", viewAll);
 router.get("/search/:keyword", search)//done and check
 router.delete("/remove/:id", remove);//done and check...

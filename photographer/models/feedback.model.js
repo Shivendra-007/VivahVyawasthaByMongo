@@ -6,11 +6,10 @@ const feedbackSchema = new mongoose.Schema({
     required: true,
   },
   photoGrapherId: {
-    type: mongoose.Schema.Types.ObjectId, // Use ObjectId type for foreign key
-    required: true,
-    ref: 'stdio', // Referencing stdio collection
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'photographer', 
   },
-  review: {
+  feedback: {
     type: String,
     required: true,
   },

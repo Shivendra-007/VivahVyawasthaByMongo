@@ -8,8 +8,12 @@ const serviceSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true,
+    required: true
   },
+  makeUpId:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"makeup"
+  }
 });
 
 const Service = mongoose.model('service', serviceSchema);

@@ -1,5 +1,6 @@
-/photographer/node_modules
-/band/node_modules
-/godhiwala/node_modules
-/mehandi/node_modules
-/caterers/node_modules
+
+node_modules
+./venue/node_modules
+./apperals/node_modules
+./vendor/node_modules
+

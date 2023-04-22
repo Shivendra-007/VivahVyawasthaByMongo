@@ -1,12 +1,14 @@
 import express from "express";
-import { saveMultiple, search, remove, viewAll ,viewById} from "../controller/bughi.controller.js";
+import { activateBuggy, activeBuggyList, removeById, saveBuggy, search, viewAll, viewById } from "../controller/buggy.controller";
 
 const router = express.Router();
 
-router.post("/save", saveMultiple);
+router.post("/save", saveBuggy);
+router.post("/activeList",activeBuggyList)
 router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);
-router.get("/search/:keyword", search)//done and check
-router.delete("/remove/:id", remove);//done and check...
+router.get("/search/:keyword", search)
+router.post("/active",activateBuggy);
+router.post("/removeById",removeById);
 
 export default router;

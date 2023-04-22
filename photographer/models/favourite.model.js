@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 
 const favouriteSchema = new mongoose.Schema({
   customerId: {
-    type: Number
-   
+    type: Number,
+   required:true
   },
   photoGrapherId: {
-    type: Number
-    
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'photographer',   
   },
 });
 

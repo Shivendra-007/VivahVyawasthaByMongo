@@ -1,7 +1,7 @@
 import Favourite from "../models/favourite.model.js";
 
-export const saveMultiple = (request, response, next) => {
-    Favourite.create(request.body.favourites)//;//favourites becase JSON {} ke pahle likhte h wahi aaayega send krte time
+export const addFavourite = (request, response, next) => {
+    Favourite.create(request.body.favourites)
         .then(result => {
             console.log(result);
             return response.status(200).json({ Message: "Favourite are saved...", status: true });
@@ -13,7 +13,7 @@ export const saveMultiple = (request, response, next) => {
 }
 
 export const viewAll = (request, response, next) => {
-    Favourite.find()
+    Favourite.find({customerId:request.body.customerId})
         .then(result => {
             console.log(result);
             return response.status(200).json({ result: result, status: true });

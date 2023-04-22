@@ -1,18 +1,25 @@
+import { validationResult } from "express-validator";
 import Band from "../models/band.model.js";
 
-export const saveMultiple = (request, response, next) => {
-    Band.create(request.body.bands)
-        .then(result => {
-            console.log(result);
-            return response.status(200).json({ Message: "Band are saved...", status: true });
-        })
-        .catch(err => {
-            console.log(err);
-            return response.status(500).json({ Message: "Internal Server error...", status: false });
-        })
+export const saveBand=async(request,response,next)=>{
+    try{
+    const errors=await validationResult(request);
+
+    if(!errors.isEmpty())
+     return response.status(400).json({error:"bad request",status:true});
+
+     const band=await Band.create(request.body);
+      return response.status(200).json({message:"venue details saved",status:true});
+    }
+    catch(err)
+    {
+        console.log(err);
+        return response.status(500).json({error:"internal server error",status:false});
+    }
+
+
 }
 
-// Route handler for /viewAll
 export const viewAll = (request, response, next) => {
     Band.find()
         .then(result => {
@@ -25,17 +32,16 @@ export const viewAll = (request, response, next) => {
         });
 };
 
-// Route handler for /viewById/:id
+
 export const viewById = (request, response, next) => {
-    const id = request.params.id; // Get the id from the request parameters
+    const id = request.params.id; 
 
     Band.findById(id)
         .then(result => {
             if (result) {
-                // If a Band document is found, send it as the response
                 return response.status(200).json({ BandDetails: result, status: true });
             } else {
-                // If no Band document is found, send an error response
+              
                 return response.status(404).json({ Message: "Band not found", status: false });
             }
         })
@@ -43,7 +49,7 @@ export const viewById = (request, response, next) => {
             console.log(err);
             return response.status(500).json({ Message: "Internal Server error...", status: false });
         });
-};
+}
 
 export const search = (request, response, next) => {
     Band.find({
@@ -58,15 +64,61 @@ export const search = (request, response, next) => {
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
-};
+}
 
-export const remove = (request, response, next) => {
-    Band.deleteOne({ _id: request.params.id }).then(() => {
-        return response.status(200).json({ message: "Band is Removed", status: true });
-    }).catch((err) => {
+export const activateBand=async(request,response,next)=>{
+    try{
+        let band=await  Band.updateOne({_id:request.body.bandId},{status:"true"})
+        if(band.modifiedCount)
+        return response.status(200).json({message:"band activate succesfully", status:true});
+        return response.status(400).json({error:"request not found", status:false});
+    }
+    catch(err)
+    {
+        return response.status(500).json({error:"internal server error",status:false});
+    }
+}
 
-        console.log(err)
-        return response.status(500).json({ error: "Internal Server Error", status: false });
-    })
-};
+export const activeBandList=async(request,response,next)=>{
+    try{
+        let band=await Band.find({status:"true"})
+        return response.status(200).json({bandList:band,status:true})
+    }
+    catch(err)
+    {
+        return response.status(500).json({error:"internal server error",status:false});
+    }
+}
 
+export const saveImages=async(request,response,next)=>{
+     try{
+        let band=await Band.find({_id:request.params.id})
+        if(!band)
+         return response.status(404).json({error:"request resorses not found",status:false})
+         
+       await (request.body.image).map((img,index)=>{
+            band.images.push(img)
+        })
+        venue.save();
+        return response.json({message:"images save",status:true})
+         
+     }
+     catch(err)
+     {
+       console.log(err);
+       return response.json({error:"internal server error",status:false})
+     }
+}
+
+export const removeById=async(request,response,next)=>{
+    try{
+        let band=await Band.updateOne({_id:request.body.bandId},{status:"false"})
+        if(band.modifiedCount)
+        return response.status(200).json({message:"deleted succesfully",status:true});
+        return response.status(400).json({error:"request not found",status:false});
+    }
+    catch(err)
+    {
+        return response.status(500).json({error:"internal server error",status:false});
+    }
+}

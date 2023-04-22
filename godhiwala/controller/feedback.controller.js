@@ -1,6 +1,6 @@
 import Feedback from "../models/feedback.model.js";
-export const saveMultiple = (request, response, next) => {
-    Feedback.create(request.body.feedbacks)
+export const save = (request, response, next) => {
+    Feedback.create(request.body.feedback)
         .then(result => {
             console.log(result);
             return response.status(200).json({ Message: "Feedback are saved...", status: true });

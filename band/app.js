@@ -1,12 +1,14 @@
 import bodyParser from "body-parser";
 import express from "express";
 import mongoose from "mongoose";
+
+
+
 import bandRouter from "./routes/band.route.js";
-import serviceRouter from "./routes/service.route.js"
 import feedbackRouter from "./routes/feedback.route.js"
 import favouriteRouter from "./routes/favourite.router.js"
 import requestRouter from "./routes/request.router.js"
-import bandNewRouter from "./routes/bandNew.route.js"
+
 
 import cors from "cors"
 const app = express();
@@ -24,9 +26,7 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/Ban
     });
 
 
-app.use("/band", bandRouter);
-app.use("/bandNew", bandNewRouter);
-app.use("/service", serviceRouter);
+app.use("/", bandRouter);
 app.use("/feedback", feedbackRouter);
 app.use("/favourite", favouriteRouter);
 app.use("/request", requestRouter);
