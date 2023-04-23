@@ -3,28 +3,25 @@ import mongoose from 'mongoose';
 const requestSchema = new mongoose.Schema({
   customerName: {
     type: String,
-    required: true,
     unique: true
   },
   contactNumber: {
     type: Number,
-    required: true
+
   },
   totalGeust: {
     type: Number,
-    required: true
+
   },
   customerId: {
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: 'Customer',
-    type:Number,
-    required: true
-  },
-  cateresId: {
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: 'Cateres',
-    type:Number,
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'customer',
+
+  },//iska jarut ku hai 
+  catererId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'caterer',
+
   },
   requestDate: {
     type: Date,

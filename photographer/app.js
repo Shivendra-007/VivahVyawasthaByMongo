@@ -1,12 +1,10 @@
 import bodyParser from "body-parser";
 import express from "express";
 import mongoose from "mongoose";
-import stdioRouter from "./routes/stdio.route.js";
-import serviceRouter from "./routes/service.route.js"
+import photographerRouter from "./routes/photographer.route.js";
 import feedbackRouter from "./routes/feedback.route.js"
 import favouriteRouter from "./routes/favourite.router.js"
 import requestRouter from "./routes/request.router.js"
-import stdioNewRouter from "./routes/stdioNew.route.js"
 
 import cors from "cors"
 const app = express();
@@ -23,9 +21,7 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/pho
     });
 
 
-app.use("/stdio", stdioRouter);
-app.use("/stdioNew", stdioNewRouter);
-app.use("/service", serviceRouter);
+app.use("/stdio", photographerRouter);
 app.use("/feedback", feedbackRouter);
 app.use("/favourite", favouriteRouter);
 app.use("/request", requestRouter);

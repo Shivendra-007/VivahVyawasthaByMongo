@@ -15,4 +15,5 @@ const feedbackSchema= new mongoose.Schema({
    }
 })
 
-export const Feedback=mongoose.model("feedback",feedbackSchema);
+ const Feedback=mongoose.model("feedback",feedbackSchema);
+ export default Feedback;

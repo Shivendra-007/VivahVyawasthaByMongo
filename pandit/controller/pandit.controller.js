@@ -1,14 +1,14 @@
 import { validationResult } from "express-validator";
-import Caterer from "../models/caterers.model.js";
+import Pandit from "../models/pandit.model.js";
 
-export const savecaterer = async (request, response, next) => {
+export const savepandit = async (request, response, next) => {
     try {
         const errors = await validationResult(request);
         if (!errors.isEmpty())
             return response.status(400).json({ error: "bad request", status: true });
 
-        const caterer = await Caterer.create(request.body);
-        return response.status(200).json({ message: "venue details saved", status: true });
+        const pandit = await Pandit.create(request.body);
+        return response.status(200).json({ message: "pandit details saved", status: true });
     }
     catch (err) {
         console.log(err);
@@ -19,10 +19,10 @@ export const savecaterer = async (request, response, next) => {
 }
 
 export const viewAll = (request, response, next) => {
-    Caterer.find()
+    Pandit.find()
         .then(result => {
             console.log(result);
-            return response.status(200).json({ catererDetails: result, status: true });
+            return response.status(200).json({ panditDetails: result, status: true });
         })
         .catch(err => {
             console.log(err);
@@ -34,13 +34,13 @@ export const viewAll = (request, response, next) => {
 export const viewById = (request, response, next) => {
     const id = request.params.id;
 
-    Caterer.findById(id)
+    Pandit.findById(id)
         .then(result => {
             if (result) {
-                return response.status(200).json({ catererDetails: result, status: true });
+                return response.status(200).json({ panditDetails: result, status: true });
             } else {
 
-                return response.status(404).json({ Message: "caterer not found", status: false });
+                return response.status(404).json({ Message: "pandit not found", status: false });
             }
         })
         .catch(err => {
@@ -50,25 +50,25 @@ export const viewById = (request, response, next) => {
 }
 
 export const search = (request, response, next) => {
-    Caterer.find({
+    Pandit.find({
         $or: [
             { address: { $regex: request.params.keyword, $options: 'i' } },
-            { title: { $regex: request.params.keyword, $options: 'i' } },
+            { companyName: { $regex: request.params.keyword, $options: 'i' } },
             { category: { $regex: request.params.keyword, $options: 'i' } },
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ caterer: result, message: "Search caterer", status: true });
+        return response.status(200).json({ pandit: result, message: "Search pandit", status: true });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
 }
 
-export const activatecaterer = async (request, response, next) => {
+export const activatepandit = async (request, response, next) => {
     try {
-        let caterer = await Caterer.updateOne({ _id: request.body.catererId }, { status: "true" })
-        if (caterer.modifiedCount)
-            return response.status(200).json({ message: "caterer activate succesfully", status: true });
+        let pandit = await Pandit.updateOne({ _id: request.body.panditId }, { status: "true" })
+        if (pandit.modifiedCount)
+            return response.status(200).json({ message: "pandit activate succesfully", status: true });
         return response.status(400).json({ error: "request not found", status: false });
     }
     catch (err) {
@@ -76,10 +76,10 @@ export const activatecaterer = async (request, response, next) => {
     }
 }
 
-export const activecatererList = async (request, response, next) => {
+export const activepanditList = async (request, response, next) => {
     try {
-        let caterer = await Caterer.find({ status: "true" })
-        return response.status(200).json({ catererList: caterer, status: true })
+        let pandit = await Pandit.find({ status: "true" })
+        return response.status(200).json({ panditList: pandit, status: true })
     }
     catch (err) {
         return response.status(500).json({ error: "internal server error", status: false });
@@ -88,12 +88,12 @@ export const activecatererList = async (request, response, next) => {
 
 export const saveImages = async (request, response, next) => {
     try {
-        let caterer = await Caterer.find({ _id: request.params.id })
-        if (!caterer)
+        let pandit = await Pandit.find({ _id: request.params.id })
+        if (!pandit)
             return response.status(404).json({ error: "request resorses not found", status: false })
 
         await (request.body.image).map((img, index) => {
-            caterer.images.push(img)
+            pandit.images.push(img)
         })
         venue.save();
         return response.json({ message: "images save", status: true })
@@ -107,8 +107,8 @@ export const saveImages = async (request, response, next) => {
 
 export const removeById = async (request, response, next) => {
     try {
-        let caterer = await Caterer.updateOne({ _id: request.body.catererId }, { status: "false" })
-        if (caterer.modifiedCount)
+        let pandit = await Pandit.updateOne({ _id: request.body.panditId }, { status: "false" })
+        if (pandit.modifiedCount)
             return response.status(200).json({ message: "deleted succesfully", status: true });
         return response.status(400).json({ error: "request not found", status: false });
     }

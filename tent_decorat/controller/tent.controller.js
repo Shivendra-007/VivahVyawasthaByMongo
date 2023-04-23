@@ -1,27 +1,52 @@
+import { validationResult } from "express-validator";
 import Tent from "../models/tent.model.js";
 
-export const saveMultiple = (request, response, next) => {
-    Tent.create(request.body.tents)
-        .then(result => {
-            console.log(result);
-            return response.status(200).json({ Message: "Tent details  are saved...", status: true });
-        })
-        .catch(err => {
-            console.log(err);
-            return response.status(500).json({ Message: "Internal Server error...", status: false });
-        })
+export const savetent = async (request, response, next) => {
+    try {
+        const errors = await validationResult(request);
+        if (!errors.isEmpty())
+            return response.status(400).json({ error: "bad request", status: true });
+
+        const tent = await Tent.create(request.body);
+        return response.status(200).json({ message: "venue details saved", status: true });
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+
+
 }
 
 export const viewAll = (request, response, next) => {
     Tent.find()
         .then(result => {
             console.log(result);
-            return response.status(200).json({ result: result, status: true });
+            return response.status(200).json({ tentDetails: result, status: true });
         })
         .catch(err => {
             console.log(err);
             return response.status(500).json({ Message: "Internal Server error...", status: false });
+        });
+};
+
+
+export const viewById = (request, response, next) => {
+    const id = request.params.id;
+
+    Tent.findById(id)
+        .then(result => {
+            if (result) {
+                return response.status(200).json({ tentDetails: result, status: true });
+            } else {
+
+                return response.status(404).json({ Message: "tent not found", status: false });
+            }
         })
+        .catch(err => {
+            console.log(err);
+            return response.status(500).json({ Message: "Internal Server error...", status: false });
+        });
 }
 
 export const search = (request, response, next) => {
@@ -37,26 +62,57 @@ export const search = (request, response, next) => {
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
-};
+}
 
-export const remove = (request, response, next) => {
-    Tent.deleteOne({ _id: request.params.id }).then(() => {
-        return response.status(200).json({ message: "Tent is Removed", status: true });
-    }).catch((err) => {
+export const activatetent = async (request, response, next) => {
+    try {
+        let tent = await tent.updateOne({ _id: request.body.tentId }, { status: "true" })
+        if (tent.modifiedCount)
+            return response.status(200).json({ message: "tent activate succesfully", status: true });
+        return response.status(400).json({ error: "request not found", status: false });
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
 
-        console.log(err)
-        return response.status(500).json({ error: "Internal Server Error", status: false });
-    })
-};
+export const activetentList = async (request, response, next) => {
+    try {
+        let tent = await Tent.find({ status: "true" })
+        return response.status(200).json({ tentList: tent, status: true })
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
 
-// export const remove = async (request, response, next) => {
-//     console.log(request.body);
-//     try {
-//        await Makeup.findByIdAndDelete(request.body.id);
-//         return response.status(200).json({ message: "makeup is Removed", status: true });
+export const saveImages = async (request, response, next) => {
+    try {
+        let tent = await Tent.find({ _id: request.params.id })
+        if (!tent)
+            return response.status(404).json({ error: "request resorses not found", status: false })
 
-//     } catch (err) {
-//         return response.status(500).json({ error: "Internal Server Error", status: false });
-//     }
+        await (request.body.image).map((img, index) => {
+            tent.images.push(img)
+        })
+        venue.save();
+        return response.json({ message: "images save", status: true })
 
-// }
+    }
+    catch (err) {
+        console.log(err);
+        return response.json({ error: "internal server error", status: false })
+    }
+}
+
+export const removeById = async (request, response, next) => {
+    try {
+        let tent = await Tent.updateOne({ _id: request.body.tentId }, { status: "false" })
+        if (tent.modifiedCount)
+            return response.status(200).json({ message: "deleted succesfully", status: true });
+        return response.status(400).json({ error: "request not found", status: false });
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}

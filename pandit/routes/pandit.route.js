@@ -1,11 +1,10 @@
 import express from "express";
-import { save,search,remove, viewAll,pricing } from "../controller/newmakeup.controller.js";
+import {  search,  viewAll ,viewById, savepandit, activatepandit, activepanditList, removeById} from "../controller/pandit.controller.js";
 import { body } from "express-validator";
-
 const router = express.Router();
 
 router.post("/save",
-body("CompanyName").notEmpty(),
+body("title").notEmpty(),
 body("experince").notEmpty(),
 body("address").notEmpty(),
 body("thumbnail").notEmpty(),
@@ -13,13 +12,16 @@ body("discription").notEmpty(),
 body("charge").notEmpty(),
 body("rating").notEmpty(),
 body("license").notEmpty(),
-body("category").notEmpty(),
+body("services").notEmpty(),
 body("longitude").notEmpty(),
 body("latitude").notEmpty()
-,save);
+, savepandit);              
+router.post("/activeList",activepanditList)
 router.get("/view", viewAll);
-router.post('/pricing',pricing)
-router.get("/search/:keyword", search)//done and check
-router.delete("/remove/:id", remove);//done and check...
+router.get("/viewById/:id", viewById);
+router.get("/search/:keyword", search)
+router.post("/active",activatepandit);
+router.post("/removeById",removeById);
+
 
 export default router;

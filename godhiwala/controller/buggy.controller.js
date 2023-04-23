@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import Buggy from "../models/buggyDetails.model";
+import Buggy from "../models/buggyDetails.model.js";
 
 
 export const saveBuggy=async(request,response,next)=>{

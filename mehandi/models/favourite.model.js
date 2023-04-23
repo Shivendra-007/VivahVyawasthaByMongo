@@ -1,18 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const favouriteSchema = new mongoose.Schema({
-  customerId: {
-    type: mongoose.Schema.Types.ObjectId, // Use ObjectId type for foreign key
+const favouriteSchema= new mongoose.Schema({
+     customerId:{
+        type:String,
+        required:true
+     },
+     mehandiId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"mehandi"
+     }
+})
 
-    ref: 'mehndi', // Referencing mehndi collection
-  },
-  mehndiId: {
-    type: mongoose.Schema.Types.ObjectId, // Use ObjectId type for foreign key
-
-    ref: 'mehndi', // Referencing mehndi collection
-  },
-});
-
-const Favourite = mongoose.model('favourite', favouriteSchema);
-
-export default Favourite;
+ const Favourite=mongoose.model("favourite",favouriteSchema);
+ export default Favourite;
