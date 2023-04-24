@@ -30,6 +30,6 @@ app.use("/feedback", feedbackRouter);
 app.use("/favourite", favouriteRouter);
 app.use("/request", requestRouter);
 
-app.listen(2021, () => {
+app.listen(6063, () => {
     console.log("Server Started for makeup");
 })
