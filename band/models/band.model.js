@@ -1,3 +1,5 @@
+
+
 import mongoose from "mongoose";
 const bandSchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -7,7 +9,7 @@ const bandSchema = new mongoose.Schema({
     latitude: { type: Number, required: true },
     experience: { type: String, required: true },
     thumbnail: { type: String },
-    rating: { type: String },
+    rating: { type: Number },
     description: {
         type: String,
         required: true,

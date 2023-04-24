@@ -1,21 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const feedbackSchema = new mongoose.Schema({
-  customerId: {
-    type: Number,
-    required: true,
-  },
-  Tent_DecoreId: {
-    type: mongoose.Schema.Types.ObjectId, // Use ObjectId type for foreign key
-    required: true,
-    ref: 'tent', // Referencing TentDecore collection
-  },
-  review: {
-    type: String,
-    required: true,
-  },
-});
+const feedbackSchema= new mongoose.Schema({
+    feedback:{
+      type:String,
+      required:true
+    },
+     customerId:{
+        type:String,
+        required:true
+     },
+     tentId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"tent"
+     }
+})
 
-const Feedback = mongoose.model('feedback', feedbackSchema);
-
-export default Feedback;
+ const Feedback=mongoose.model("feedback",feedbackSchema);
+ export default Feedback;

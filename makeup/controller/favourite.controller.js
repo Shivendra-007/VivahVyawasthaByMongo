@@ -1,36 +1,44 @@
-import Favourite from "../models/favourite.model.js";
+import { validationResult } from "express-validator";
+import  Favourite  from "../models/favourite.model.js";
 
-export const saveMultiple = (request, response, next) => {
-    Favourite.create(request.body.favourites)//;//favourites becase JSON {} ke pahle likhte h wahi aaayega send krte time
-        .then(result => {
-            console.log(result);
-            return response.status(200).json({ Message: "Favourite are saved...", status: true });
-        })
-        .catch(err => {
+
+
+export const addFavourite=async(request,response,next)=>{
+    try{
+        const errors=await validationResult(request);
+        if(!errors.isEmpty())
+         return response.status(400).json({error:"bad request",status:true});
+         const makeup=await Favourite.create(request.body);
+          return response.status(200).json({message:"Add to favourite",status:true});
+        }
+        catch(err)
+        {
             console.log(err);
-            return response.status(500).json({ Message: "Internal Server error...", status: false });
-        })
+            return response.status(500).json({error:"internal server error",status:false});
+        }
+    
 }
 
-export const viewAll = (request, response, next) => {
-    Favourite.find()
-        .then(result => {
-            console.log(result);
-            return response.status(200).json({ result: result, status: true });
-        })
-        .catch(err => {
-            console.log(err);
-            return response.status(500).json({ Message: "Internal Server error...", status: false });
-        })
-}
-
-
-export const remove = (request, response, next) => {
-    Favourite.deleteOne({ _id: request.params.id }).then(() => {
-        return response.status(200).json({ message: "Favourite is Removed", status: true });
-    }).catch((err) => {
-
-        console.log(err)
-        return response.status(500).json({ error: "Internal Server Error", status: false });
+export const byCustomerId=(request,response,next)=>{
+    Favourite.find({customerId: request.params.customerId})
+    .populate("venueId").then(result=>{
+        return response.status(200).json(result);
+    }).catch(err=>{
+        console.log(err);
+        return response.status(500).json({error: "Internal server error"});
     })
-};
+
+}
+
+export const removeFromFavourite= async(request,response,next)=>{
+    try{
+        let requests= await Favourite.findByIdAndDelete(request.body._id)
+         if(requests)
+         return response.status(200).json({message:"favourite remove successfully",status:true})
+         return response.status(400).json({error:"request resorses not found",status:false})
+     }
+     catch(err)
+     {
+         return response.status(500).json({error:"internal server error",status:false})
+     }
+}

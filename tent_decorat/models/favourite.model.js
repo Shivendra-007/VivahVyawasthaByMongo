@@ -1,16 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const favouriteSchema = new mongoose.Schema({
-  customerId: {
-    type: Number
-   
-  },
-  Tent_DecoreId: {
-    type: Number
-    
-  },
-});
+const favouriteSchema= new mongoose.Schema({
+     customerId:{
+        type:String,
+        required:true
+     },
+     tentId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"tent"
+     }
+})
 
-const Favourite = mongoose.model('favourite', favouriteSchema);
-
-export default Favourite;
+ const Favourite=mongoose.model("favourite",favouriteSchema);
+ export default Favourite;

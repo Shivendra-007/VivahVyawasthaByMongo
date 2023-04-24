@@ -18,9 +18,9 @@ const requestSchema = new mongoose.Schema({
     ref: 'customer',
 
   },//iska jarut ku hai 
-  mehndiId: {
+  mehandiId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'mehndi',
+    ref: 'mehandi',
 
   },
   requestDate: {

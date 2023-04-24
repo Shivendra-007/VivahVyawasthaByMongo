@@ -1,5 +1,5 @@
 import Feedback from "../models/feedback.model.js";
-export const saveMultiple = (request, response, next) => {
+export const save = (request, response, next) => {
     Feedback.create(request.body.feedbacks)
         .then(result => {
             console.log(result);

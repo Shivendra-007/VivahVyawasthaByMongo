@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { Favourite } from "../models/favourite.model";
+import  Favourite  from "../models/favourite.model.js";
 
 
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { saveMultiple, remove, viewAll, save } from "../controller/feedback.controller.js";
+import { remove, viewAll, save } from "../controller/feedback.controller.js";
 let router = express.Router();
 
 router.post("/save", save);

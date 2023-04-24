@@ -1,57 +1,31 @@
 import mongoose from "mongoose";
 const makeupSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-      },
-    experience: {
-        type: String,
-        required: true,
-      },
-    address: {
-        type: String,
-        required: true,
-      },
-    thumbnail: {
-        type: String,
-        required: true,
-      },
+    title: { type: String, required: true },
+    address: { type: String, required: true },
+    contactNumber: { type: String, required: true },
+    longitude: { type: Number, required: true },
+    latitude: { type: Number, required: true },
+    experience: { type: String, required: true },
+    thumbnail: { type: String },
+    rating: { type: String },
     description: {
         type: String,
         required: true,
       },
-    price:{
-        type: String,
-        required: true,
-      },
-    rating: {
-        type: String,
-        required: true,
-      },
-    longitude: {
-        type: String,
-        required: true,
-      },
-    laitude:{
-        type: String,
-        required: true,
-      },
+    services: [{
+        service: { type: String, required: true },
+        price: { type: Number, required: true }, 
+    }],
     images: [],
-   
-    
-    vendorId: {
-        type: String,
-        required: true,
-      },
-      status:{
-    
+    vendorId: { type: Number, required: true },
+    status:{
+        type:String,
+        required:true,
         default:'false'
     },
+
 });
 
+const Makeup = mongoose.model('makeup', makeupSchema);
 
-  export const Makeup = mongoose.model('makeup', makeupSchema);
-
-
-
-
+export default Makeup;

@@ -1,5 +1,5 @@
 import express from "express";
-import {  search,  viewAll ,viewById, savemakeup, activatemakeup, activemakeupList, removeById} from "../controller/makeup.controller.js";
+import {  search,  viewAll ,viewById, savemehandi, activatemehandi, activemehandiList, removeById} from "../controller/mehandi.controller.js";
 import { body } from "express-validator";
 const router = express.Router();
 
@@ -14,12 +14,12 @@ body("license").notEmpty(),
 body("services").notEmpty(),
 body("longitude").notEmpty(),
 body("latitude").notEmpty()
-, savemakeup);              
-router.post("/activeList",activemakeupList)
+, savemehandi);              
+router.post("/activeList",activemehandiList)
 router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);
 router.get("/search/:keyword", search)
-router.post("/active",activatemakeup);
+router.post("/active",activatemehandi);
 router.post("/removeById",removeById);
 
 

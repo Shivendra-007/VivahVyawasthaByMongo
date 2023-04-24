@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const tentSchema = new mongoose.Schema({
+const mehandiSchema = new mongoose.Schema({
     title: { type: String, required: true },
     address: { type: String, required: true },
     contactNumber: { type: String, required: true },
@@ -27,6 +27,6 @@ const tentSchema = new mongoose.Schema({
 });
 
 
-const Tent = mongoose.model('tent', tentSchema);
+const Mehandi = mongoose.model('mehandi', mehandiSchema);
 
-export default Tent;
+export default Mehandi;
