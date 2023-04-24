@@ -15,20 +15,40 @@ app.use( gateway({
     },
     {
       prefix: '/makeup',
-      target: 'http://localhost:6061/',  
+      target: 'http://localhost:6062/',  
     },
     {
       prefix: '/mehandi',
-      target: 'http://localhost:6061/',  
+      target: 'http://localhost:6063/',  
     },
     {
-      prefix: '/',
-      target: 'http://localhost:6061/',  
+      prefix: '/photgrapher',
+      target: 'http://localhost:6064/',  
     },
     {
-      prefix: '/apperals',
-      target: 'http://localhost:6061/',  
-    }
+      prefix: '/buggy',
+      target: 'http://localhost:6065/',  
+    },
+
+    {
+      prefix: '/caterers',
+      target: 'http://localhost:6066/',  
+    },
+
+    {
+      prefix: '/pandit',
+      target: 'http://localhost:6067/',  
+    },
+ 
+    {
+      prefix: '/tent',
+      target: 'http://localhost:6068/',  
+    },
+
+    {
+      prefix: '/band',
+      target: 'http://localhost:6069/',  
+    },
 ]
   })
 )

@@ -27,6 +27,6 @@ app.use("/feedback", feedbackRouter);
 app.use("/favourite", favouriteRouter);
 app.use("/request", requestRouter);
 
-app.listen(1010, () => {
+app.listen(6065, () => {
     console.log("Server Started");
 })

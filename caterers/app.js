@@ -31,6 +31,6 @@ app.use("/feedback", feedbackRouter);
 app.use("/favourite", favouriteRouter);
 app.use("/request", requestRouter);
 
-app.listen(2022, () => {
+app.listen(6066, () => {
     console.log("Server Started for caterer");
 })
