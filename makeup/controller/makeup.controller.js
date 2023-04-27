@@ -1,21 +1,21 @@
 import { validationResult } from "express-validator";
 import Makeup from "../models/makeup.model.js";
 
+
 export const savemakeup = async (request, response, next) => {
+    console.log(request.body);
     try {
-        const errors = await validationResult(request);
+        const errors = await validationResult(request.body.Makeups);
         if (!errors.isEmpty())
             return response.status(400).json({ error: "bad request", status: true });
 
-        const makeup = await Makeup.create(request.body);
-        return response.status(200).json({ message: "venue details saved", status: true });
+        const makeup = await Makeup.create(request.body.Makeups);
+        return response.status(200).json({ message: "Makeup details saved", status: true });
     }
     catch (err) {
         console.log(err);
         return response.status(500).json({ error: "internal server error", status: false });
     }
-
-
 }
 
 export const viewAll = (request, response, next) => {
@@ -116,3 +116,27 @@ export const removeById = async (request, response, next) => {
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }
+// Import your dependencies and define your router
+// import express from "express"
+// const router = express.Router();
+// const Vendor = require('../models/Vendor');
+
+// // Update the status field of a vendor
+// router.put('/:id', async (req, res) => {
+//   const vendorId = req.params.id;
+//   const newStatus = req.body.status;
+
+//   try {
+//     const updatedVendor = await Vendor.findByIdAndUpdate(
+//       vendorId,
+//       { status: newStatus },
+//       { new: true }
+//     );
+//     res.status(200).json(updatedVendor);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+// module.exports = router;
+
