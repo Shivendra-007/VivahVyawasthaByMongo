@@ -1,7 +1,9 @@
 import { validationResult } from "express-validator";
 import Makeup from "../models/makeup.model.js";
 
+
 export const savemakeup = async (request, response, next) => {
+
 
     console.log(request.body.Makeups)
     try {
@@ -12,13 +14,13 @@ export const savemakeup = async (request, response, next) => {
         const makeup = await Makeup.create(request.body.Makeups);
      
         return response.status(200).json({ message: "makeup artist details saved", status: true });
+
+   
     }
     catch (err) {
         console.log(err);
         return response.status(500).json({ error: "internal server error", status: false });
     }
-
-
 }
 
 export const viewAll = (request, response, next) => {
@@ -132,3 +134,5 @@ export const removeById = async (request, response, next) => {
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }
+
+

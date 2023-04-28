@@ -51,6 +51,11 @@ const venueDetailsSchema=new mongoose.Schema({
         required:true,
         default:'false'
     },
+    premium: {
+        type: String,
+        required: true,
+        default: "false"
+    },
     categoryId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"category"

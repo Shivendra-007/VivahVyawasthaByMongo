@@ -1,5 +1,6 @@
-import { validationResult } from "express-validator";
-import { Vendor } from "../model/vendor.model";
+import {  validationResult } from "express-validator";
+import { Vendor } from "../model/vendor.model.js";
+import bcrypt from "bcryptjs"
 
 export const signIn = async (request,response,next)=>{
     try{
@@ -15,16 +16,18 @@ export const signIn = async (request,response,next)=>{
   }
   export const signUp = async (request,response,next)=>{
     try{ 
-     const errors = validationResult(request);
+     const errors = validationResult(request.body);
+     console.log(request.body);
      if(!errors.isEmpty())
        return response.status(400).json({error: "Bad request", status: false, errors: errors.array()});
-     const saltKey = await bcrypt.genSalt(10); 
+     const saltKey = await bcrypt.genSalt(10) 
      request.body.password = await bcrypt.hash(request.body.password,saltKey);
      
      let vendor = await Vendor.create(request.body);
      return response.status(200).json({message: "Signup success",  status: true});
     }
     catch(err){
+      console.log(err)
       return response.status(500).json({error: "Internal Server Error", status: false});
     }
 }
@@ -46,4 +49,16 @@ export const update=async(request,response,next)=>{
     {
       return response.status(500).json({error:"internal server error",status:false});
     }
+}
+
+export const byCategory = async(request,response)=>{
+  try{
+    console.log(request.body)
+ let result = await Vendor.find({categoryId:request.body.categoryId});
+ return response.status(200).json(result);
+  }
+  catch(err)
+  {
+    console.log(err)
+  }
 }

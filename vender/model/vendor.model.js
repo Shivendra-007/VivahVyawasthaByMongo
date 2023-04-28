@@ -17,6 +17,10 @@ const vendorSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    categoryId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"category"
     }
 
 });
