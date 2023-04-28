@@ -17,7 +17,7 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/ven
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(cors())
-    app.use("/",VanueRouter)
+    app.use("/venue",VanueRouter)
     app.use("/category",CategoryRouter)
     app.use("/request",RequestRouter)
     app.use("/booking",BookingRouter)

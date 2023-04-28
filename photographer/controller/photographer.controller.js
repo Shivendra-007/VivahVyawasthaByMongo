@@ -3,10 +3,10 @@ import Photographer from "../models/photographer.model.js";
 
 export const save=async(request,response,next)=>{
     try{
-    const errors=await validationResult(request);
+    // const errors=await validationResult(request);
 
-    if(!errors.isEmpty())
-     return response.status(400).json({error:"bad request",status:true});
+    // if(!errors.isEmpty())
+    //  return response.status(400).json({error:"bad request",status:true});
 
      const band=await Photographer.create(request.body);
       return response.status(200).json({message:"photographer details saved",status:true});

@@ -1,20 +1,18 @@
 import { validationResult } from "express-validator";
 import Band from "../models/band.model.js";
 
-export const saveBand = async (request, response, next) => {
-    try {
-        // const errors = await validationResult(request);
-        // if (!errors.isEmpty())
-        //     return response.status(400).json({ error: "bad request", status: true });
-
-        const band = await Band.create(request.body.json);
-        return response.status(200).json({ message: "venue details saved", status: true });
-    }
-    catch (err) {
-        console.log(err);
-        return response.status(500).json({ error: "internal server error", status: false });
-    }
+export const saveBand = (request, response, next) => {
+    Band.create(request.body.bands)
+        .then(result => {
+            console.log(result);
+            return response.status(200).json({ Message: "makeup are saved...", status: true });
+        })
+        .catch(err => {
+            console.log(err);
+            return response.status(500).json({ Message: "Internal Server error...", status: false });
+        })
 }
+
 
 export const viewAll = (request, response, next) => {
     Band.find()

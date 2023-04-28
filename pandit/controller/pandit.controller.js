@@ -1,23 +1,17 @@
 import { validationResult } from "express-validator";
 import Pandit from "../models/pandit.model.js";
 
-export const savepandit = async (request, response, next) => {
-    try {
-        const errors = await validationResult(request);
-        if (!errors.isEmpty())
-            return response.status(400).json({ error: "bad request", status: true });
-
-        const pandit = await Pandit.create(request.body);
-        return response.status(200).json({ message: "pandit details saved", status: true });
-    }
-    catch (err) {
-        console.log(err);
-        return response.status(500).json({ error: "internal server error", status: false });
-    }
-
-
+export const savepandit = (request, response, next) => {
+    Pandit.create(request.body.pandits)
+        .then(result => {
+            console.log(result);
+            return response.status(200).json({ Message: "pandit detailsare saved...", status: true });
+        })
+        .catch(err => {
+            console.log(err);
+            return response.status(500).json({ Message: "Internal Server error...", status: false });
+       })
 }
-
 export const viewAll = (request, response, next) => {
     Pandit.find()
         .then(result => {

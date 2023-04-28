@@ -4,17 +4,16 @@ import { body } from "express-validator";
 const router = express.Router();
 
 router.post("/save",
-body("title").notEmpty(),
-body("experince").notEmpty(),
-body("address").notEmpty(),
-body("thumbnail").notEmpty(),
-body("discription").notEmpty(),
-body("rating").notEmpty(),
-body("license").notEmpty(),
-body("services").notEmpty(),
-body("longitude").notEmpty(),
-body("latitude").notEmpty()
-, savemakeup);              
+// body("title").notEmpty(),
+// body("experince").notEmpty(),
+// body("address").notEmpty(),
+// body("thumbnail").notEmpty(),
+// body("discription").notEmpty(),
+// body("rating").notEmpty(),
+// body("services").notEmpty(),
+// body("longitude").notEmpty(),
+// body("latitude").notEmpty()
+savemakeup);              
 router.post("/activeList",activemakeupList)
 router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);

@@ -3,7 +3,8 @@ import { allList, activate, fetchById, removeById, save, activeList } from "../c
 import {body} from "express-validator";
 
 
-const router=express.Router();
+const 
+router=express.Router();
 
 router.post("/save",
    body("title").notEmpty(),

@@ -3,9 +3,7 @@ import mongoose from "mongoose";
 const venueDetailsSchema=new mongoose.Schema({
     title:{
            type:String,
-           required:true,
-
-    },
+           required:true,},
     capacity:{
          type:Number,
          required:true,
@@ -13,6 +11,14 @@ const venueDetailsSchema=new mongoose.Schema({
     address:{
         type:String,
         required:true
+    },
+    contactNumber:{
+        type:Number,
+        required:true
+    },
+    thumbnail:{
+    type:String,
+    required:true
     },
     description:{
         type:String,
@@ -54,9 +60,11 @@ const venueDetailsSchema=new mongoose.Schema({
     categoryId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"category"
-    }
-
-        
+    },
+    services:{
+      type:[]
+      
+    },
 })
 
 export const VenueDetails=mongoose.model("venueDetail",venueDetailsSchema)

@@ -1,16 +1,19 @@
-import { response } from "express";
-import { VenueDetails } from "../model/venueDetails.model.js"
+
+import  {VenueDetails}  from "../model/venueDetails.model.js"
 import { validationResult } from "express-validator";
 
 export const save=async(request,response,next)=>{
+    console.log(request.body)
     try{
-    const errors=await validationResult(request);
-
+    const errors=  validationResult(request.body.venues);
+    
     if(!errors.isEmpty())
+    
      return response.status(400).json({error:"bad request",status:true});
-
-     const venueDetails=await VenueDetails.create(request.body);
-      return response.status(200).json({message:"venue details saved",status:true});
+     
+     const venueDetails = await VenueDetails.create(request.body.venues);
+     
+     return response.status(200).json({message:"venue details saved",status:true});
     }
     catch(err)
     {
@@ -20,7 +23,6 @@ export const save=async(request,response,next)=>{
 
 
 }
-
 export const removeById=async(request,response,next)=>{
     try{
         let venueDetails=await VenueDetails.updateOne({_id:request.body.venueDetailsId},{status:"false"})
