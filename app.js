@@ -49,6 +49,11 @@ app.use( gateway({
       prefix: '/band',
       target: 'http://localhost:6069/',  
     },
+
+    {
+      prefix: '/vender',
+      target: 'http://localhost:8082/',  
+    },
 ]
   })
 )

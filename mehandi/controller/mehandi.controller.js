@@ -116,3 +116,15 @@ export const removeById = async (request, response, next) => {
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }
+
+export const topList = (request, response, next) => {
+    Mehandi.find().limit(10)
+        .then(result => {
+            console.log(result);
+            return response.status(200).json({ mehandiDetails: result, status: true });
+        })
+        .catch(err => {
+            console.log(err);
+            return response.status(500).json({ Message: "Internal Server error...", status: false });
+        });
+};

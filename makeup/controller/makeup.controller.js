@@ -3,14 +3,19 @@ import Makeup from "../models/makeup.model.js";
 
 
 export const savemakeup = async (request, response, next) => {
-    console.log(request.body);
+
+
+    console.log(request.body.Makeups)
     try {
-        const errors = await validationResult(request.body.Makeups);
+        const errors =  validationResult(request.body.Makeups);
         if (!errors.isEmpty())
-            return response.status(400).json({ error: "bad request", status: true });
+            return response.status(400).json({ error: "bad request",errors, status: false });
 
         const makeup = await Makeup.create(request.body.Makeups);
-        return response.status(200).json({ message: "Makeup details saved", status: true });
+     
+        return response.status(200).json({ message: "makeup artist details saved", status: true });
+
+   
     }
     catch (err) {
         console.log(err);
@@ -20,6 +25,19 @@ export const savemakeup = async (request, response, next) => {
 
 export const viewAll = (request, response, next) => {
     Makeup.find()
+        .then(result => {
+            console.log(result);
+            return response.status(200).json({ makeupDetails: result, status: true });
+        })
+        .catch(err => {
+            console.log(err);
+            return response.status(500).json({ Message: "Internal Server error...", status: false });
+        });
+};
+
+
+export const topList = (request, response, next) => {
+    Makeup.find().limit(10)
         .then(result => {
             console.log(result);
             return response.status(200).json({ makeupDetails: result, status: true });
@@ -116,27 +134,5 @@ export const removeById = async (request, response, next) => {
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }
-// Import your dependencies and define your router
-// import express from "express"
-// const router = express.Router();
-// const Vendor = require('../models/Vendor');
 
-// // Update the status field of a vendor
-// router.put('/:id', async (req, res) => {
-//   const vendorId = req.params.id;
-//   const newStatus = req.body.status;
-
-//   try {
-//     const updatedVendor = await Vendor.findByIdAndUpdate(
-//       vendorId,
-//       { status: newStatus },
-//       { new: true }
-//     );
-//     res.status(200).json(updatedVendor);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
-
-// module.exports = router;
 

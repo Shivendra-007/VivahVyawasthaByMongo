@@ -1,5 +1,5 @@
 import express from "express"
-import { allList, activate, fetchById, removeById, save, activeList } from "../controller/venueDetails.action.js";
+import { allList, activate, fetchById, removeById, save, activeList, topList } from "../controller/venueDetails.action.js";
 import {body} from "express-validator";
 
 
@@ -22,5 +22,5 @@ router.get("/allList",allList)
 router.post("/deactivate",removeById);
 router.post("/activate",activate)
 router.get("/activeList",activeList)
-
+router.get("/topList",topList);
 export default router;
