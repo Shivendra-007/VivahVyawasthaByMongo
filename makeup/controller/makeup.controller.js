@@ -2,13 +2,16 @@ import { validationResult } from "express-validator";
 import Makeup from "../models/makeup.model.js";
 
 export const savemakeup = async (request, response, next) => {
-    try {
-        const errors = await validationResult(request);
-        if (!errors.isEmpty())
-            return response.status(400).json({ error: "bad request", status: true });
 
-        const makeup = await Makeup.create(request.body);
-        return response.status(200).json({ message: "venue details saved", status: true });
+    console.log(request.body.Makeups)
+    try {
+        const errors =  validationResult(request.body.Makeups);
+        if (!errors.isEmpty())
+            return response.status(400).json({ error: "bad request",errors, status: false });
+
+        const makeup = await Makeup.create(request.body.Makeups);
+     
+        return response.status(200).json({ message: "makeup artist details saved", status: true });
     }
     catch (err) {
         console.log(err);
@@ -20,6 +23,19 @@ export const savemakeup = async (request, response, next) => {
 
 export const viewAll = (request, response, next) => {
     Makeup.find()
+        .then(result => {
+            console.log(result);
+            return response.status(200).json({ makeupDetails: result, status: true });
+        })
+        .catch(err => {
+            console.log(err);
+            return response.status(500).json({ Message: "Internal Server error...", status: false });
+        });
+};
+
+
+export const topList = (request, response, next) => {
+    Makeup.find().limit(10)
         .then(result => {
             console.log(result);
             return response.status(200).json({ makeupDetails: result, status: true });

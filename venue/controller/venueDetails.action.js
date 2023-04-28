@@ -101,3 +101,14 @@ export const saveImages=async(request,response,next)=>{
        return response.json({error:"internal server error",status:false})
      }
 }
+
+export const topList=async(request,response,next)=>{
+    try{
+        let venueDetails=await VenueDetails.find().limit(10)
+        return response.status(200).json({venueList:venueDetails,status:true})
+    }
+    catch(err)
+    {
+        return response.status(500).json({error:"internal server error",status:false});
+    }
+}
