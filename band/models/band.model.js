@@ -20,6 +20,11 @@ const bandSchema = new mongoose.Schema({
     }],
     images: [],
     vendorId: { type: Number, required: true },
+    premium: {
+        type: String,
+        required: true,
+        default: "false"
+    },
     status:{
         type:String,
         required:true,
