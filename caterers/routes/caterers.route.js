@@ -2,7 +2,7 @@ import express from "express";
 import {  search,  viewAll ,viewById, savecaterer, activatecaterer, activecatererList, removeById} from "../controller/caterers.controller.js";
 import { body } from "express-validator";
 const router = express.Router();
-
+const uploads = multer({ dest: "public/Images/" });
 router.post("/save",
 body("title").notEmpty(),
 body("experince").notEmpty(),
@@ -13,8 +13,7 @@ body("rating").notEmpty(),
 body("license").notEmpty(),
 body("services").notEmpty(),
 body("longitude").notEmpty(),
-body("latitude").notEmpty()
-, savecaterer);              
+body("latitude").notEmpty(),uploads.any("image"),savecaterer);              
 router.post("/activeList",activecatererList)
 router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);

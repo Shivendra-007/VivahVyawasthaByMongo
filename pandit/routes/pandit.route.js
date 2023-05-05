@@ -2,7 +2,7 @@ import express from "express";
 import {  search,  viewAll ,viewById, savepandit, activatepandit, activepanditList, removeById} from "../controller/pandit.controller.js";
 import { body } from "express-validator";
 const router = express.Router();
-
+const uploads = multer({ dest: "public/Images/" });
 router.post("/save",
 body("title").notEmpty(),
 body("experince").notEmpty(),
@@ -14,7 +14,7 @@ body("rating").notEmpty(),
 body("license").notEmpty(),
 body("services").notEmpty(),
 body("longitude").notEmpty(),
-body("latitude").notEmpty()
+body("latitude").notEmpty(),uploads.any("image")
 , savepandit);              
 router.post("/activeList",activepanditList)
 router.get("/view", viewAll);

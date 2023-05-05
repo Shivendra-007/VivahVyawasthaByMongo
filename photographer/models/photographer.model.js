@@ -7,7 +7,6 @@ const photoStudioSchema = new mongoose.Schema({
     experience: { type: String, required: true },
 
     thumbnail: { type: String },
-    licence: { type: String },
     rating: { type: String },
     description: {
         type: String,
@@ -19,6 +18,11 @@ const photoStudioSchema = new mongoose.Schema({
     }],
     images: [],
     vendorId: { type: Number, required: true },
+    premium: {
+        type: String,
+        required: true,
+        default: "false"
+    },
     status:{
         type:String,
         required:true,

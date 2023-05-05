@@ -1,17 +1,29 @@
 import { validationResult } from "express-validator";
 import Pandit from "../models/pandit.model.js";
+export const saveBand= (request, response, next) => {
+    console.log("data savesd")
+    try {
+        console.log(request.files);
+        let thumbnail = null;
+        let images = [];
+        request.files.map(file => {
+            if (file.fieldname != "file")
+                images.push(file.path)
+            else
+                thumbnail = file.path
+        });
 
-export const savepandit = (request, response, next) => {
-    Pandit.create(request.body.pandits)
-        .then(result => {
-            console.log(result);
-            return response.status(200).json({ Message: "pandit detailsare saved...", status: true });
-        })
-        .catch(err => {
-            console.log(err);
-            return response.status(500).json({ Message: "Internal Server error...", status: false });
-       })
+        let { title, description, price, address, rating, longitude, latitude, service, experience, contactNumber } = request.body
+      Pandit.create(({ images: images, thumbnail: thumbnail, price: price, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, experience: experience, contactNumber: contactNumber }))
+        return response.status(200).json({ message: "saved...", status: true });
+
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "Internal server error", status: false });
+    }
 }
+
 export const viewAll = (request, response, next) => {
     Pandit.find()
         .then(result => {

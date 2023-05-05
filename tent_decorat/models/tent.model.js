@@ -11,17 +11,22 @@ const tentSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-      },
+    },
     services: [{
         service: { type: String, required: true },
-        price: { type: Number, required: true }, 
+        price: { type: Number, required: true },
     }],
     images: [],
     vendorId: { type: Number, required: true },
-    status:{
-        type:String,
-        required:true,
-        default:'false'
+    premium: {
+        type: String,
+        required: true,
+        default: "false"
+    },
+    status: {
+        type: String,
+        required: true,
+        default: 'false'
     },
 
 });

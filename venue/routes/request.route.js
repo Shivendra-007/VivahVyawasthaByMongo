@@ -12,9 +12,9 @@ router.post("/add",
   body("dateFrom").notEmpty(),
   body("dateTo").notEmpty(),
   body("customerId").notEmpty(),
-
 add);
 router.post("/byVenueId",byVenueId);
+
 router.post("/remove",remove);
 router.post('/confirm',confirm);
 

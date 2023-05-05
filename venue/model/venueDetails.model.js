@@ -1,70 +1,86 @@
 import mongoose from "mongoose";
 
-const venueDetailsSchema=new mongoose.Schema({
-    title:{
-           type:String,
-           required:true,},
-    capacity:{
-         type:Number,
-         required:true,
-    },
-    address:{
-        type:String,
+const venueDetailsSchema = new mongoose.Schema({
+    title: {
+        type: String,
         required:true
     },
-    contactNumber:{
-        type:Number,
+    capacity: {
+        type: Number,
         required:true
     },
-    thumbnail:{
-    type:String,
-    required:true
-    },
-    description:{
-        type:String,
+    address: {
+        type: String,
         required:true
+        
     },
-    charges:{
-        type:Number,
+    contactNumber: {
+        type: Number,
         required:true
+        
     },
-    rating:{
-        type:Number,
+    thumbnail: {
+        type: String,
         required:true
+        
     },
-    license:{
-        type:String,
+    description: {
+        type: String,
         required:true
+        
     },
-    longitude:{
-        type:Number,
+    charges: {
+        type: Number,
         required:true
+        
     },
-    latitude:{
-        type:Number,
+    rating: {
+        type: Number,
         required:true
+        
     },
-    images:{
-      type:[]
-      
+    license: {
+        type: String,
+        required: false
     },
-    vendorId:{
-        type:Number,
-        required:true
+    longitude: {
+        type: Number,
+        required: false
     },
-    status:{
-        type:String,
-        required:true,
-        default:'false'
+    latitude: {
+        type: Number,
+        required: false
     },
-    categoryId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"category"
+    images: {
+        type: []
+
     },
-    services:{
-      type:[]
-      
+    vendorId: {
+        type: String,
+        
     },
+    status: {
+        type: String,
+        default: 'false'
+    },
+    premium: {
+        type: String,
+        default: "false"
+    },
+    categoryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "category"
+    },
+    services: {
+        type: []
+
+    },
+    catering: {
+        NonvegPrice: { type: Number },
+        VegPrice: { type: Number},
+        Menueimage:{type:[]}
+    },
+    // facility:[] 
 })
 
-export const VenueDetails=mongoose.model("venueDetail",venueDetailsSchema)
+export const VenueDetails = mongoose.model("venueDetail", venueDetailsSchema)

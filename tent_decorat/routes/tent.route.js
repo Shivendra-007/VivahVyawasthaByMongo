@@ -2,7 +2,7 @@ import express from "express";
 import {  search,  viewAll ,viewById, savetent, activatetent, activetentList, removeById} from "../controller/tent.controller.js";
 import { body } from "express-validator";
 const router = express.Router();
-
+const uploads = multer({ dest: "public/Images/" });
 router.post("/save",
 body("title").notEmpty(),
 body("experince").notEmpty(),
@@ -15,7 +15,7 @@ body("license").notEmpty(),
 body("services").notEmpty(),
 body("longitude").notEmpty(),
 body("latitude").notEmpty()
-, savetent);              
+, savetent),uploads.any("image");      
 router.post("/activeList",activetentList)
 router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);

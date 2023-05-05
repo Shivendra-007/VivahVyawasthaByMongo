@@ -5,7 +5,7 @@ import cors from "cors"
 
 const app=express();
 
-import VanueRouter from "./routes/venueDetails.route.js"
+import VanueRouter from "./routes/venueDetails.route.js"    
 import CategoryRouter from "./routes/category.route.js"
 import RequestRouter from "./routes/request.route.js"
 import BookingRouter from "./routes/booking.route.js"
