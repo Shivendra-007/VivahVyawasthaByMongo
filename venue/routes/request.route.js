@@ -9,8 +9,8 @@ router.post("/add",
   body("contactNumber").notEmpty(),
   body("totalGuest").notEmpty(),
   body("typeOfEvent").notEmpty(),
-  body("dateFrom").notEmpty(),
-  body("dateTo").notEmpty(),
+  body("checkIn").notEmpty(),
+  body("checkOut").notEmpty(),
   body("customerId").notEmpty(),
 add);
 router.post("/byVenueId",byVenueId);

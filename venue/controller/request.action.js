@@ -3,8 +3,9 @@ import { Request } from "../model/request.model.js";
 import { Booking } from "../model/bookingDetails.model.js";
 
 export const add=async(request,response,next)=>{
+    console.log(request.body)
     try{
-    const errors=await validationResult(request);
+    const errors=await validationResult(request.body);
 
     if(!errors.isEmpty())
      return response.status(400).json({error:"bad request",status:true});

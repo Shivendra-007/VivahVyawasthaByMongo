@@ -3,45 +3,45 @@ import mongoose from "mongoose";
 const venueDetailsSchema = new mongoose.Schema({
     title: {
         type: String,
-        required:true
+        required: true
     },
     capacity: {
         type: Number,
-        required:true
+        required: true
     },
     address: {
         type: String,
-        required:true
-        
+        required: true
+
     },
     contactNumber: {
         type: Number,
-        required:true
-        
+        required: true
+
     },
     thumbnail: {
         type: String,
-        required:true
-        
+        required: true
+
     },
     description: {
         type: String,
-        required:true
-        
+        required: true
+
     },
     charges: {
         type: Number,
-        required:true
-        
+        required: true
+
     },
     rating: {
         type: Number,
-        required:true
-        
+        required: true
+
     },
     license: {
         type: String,
-        required: false
+        required: true
     },
     longitude: {
         type: Number,
@@ -57,15 +57,17 @@ const venueDetailsSchema = new mongoose.Schema({
     },
     vendorId: {
         type: String,
-        
+
+        required: true
+
     },
     status: {
-        type: String,
-        default: 'false'
+        type: Boolean,
+        default: false
     },
     premium: {
-        type: String,
-        default: "false"
+        type: Boolean,
+        default: false
     },
     categoryId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -77,8 +79,8 @@ const venueDetailsSchema = new mongoose.Schema({
     },
     catering: {
         NonvegPrice: { type: Number },
-        VegPrice: { type: Number},
-        Menueimage:{type:[]}
+        VegPrice: { type: Number },
+        Menueimage: { type: [] }
     },
     // facility:[] 
 })

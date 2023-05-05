@@ -2,24 +2,6 @@
 import { VenueDetails } from "../model/venueDetails.model.js"
 import { validationResult } from "express-validator";
 
-// export const save = async (request, response, next) => {
-//     console.log(request.body)
-//     try {
-//         const errors = validationResult(request.body);
-
-//         if (!errors.isEmpty())
-
-//             return response.status(400).json({ error: "bad request", status: true });
-
-//         VenueDetails.create(request.body);
-
-//         return response.status(200).json({ message: "venue details saved", status: true });
-//     }
-//     catch (err) {
-//         console.log(err);
-//         return response.status(500).json({ error: "internal server error", status: false });
-//     }
-// }
 
 export const save = (request, response, next) => {
     console.log("data savesd")
@@ -146,4 +128,23 @@ export const topList = async (request, response, next) => {
     catch (err) {
         return response.status(500).json({ error: "internal server error", status: false });
     }
+}
+
+export const search = (request, response, next) => {
+    console.log(request.params.keyword)
+    VenueDetails.find({
+        $or: [
+            { address: { $regex: request.params.keyword, $options: 'i' } },
+            { title: { $regex: request.params.keyword, $options: 'i' } },
+            { category: { $regex: request.params.keyword, $options: 'i' } },
+            { description: { $regex: request.params.keyword, $options: 'i' } }
+        ]
+    }).then(result => {
+       
+       if(result.length)
+        return response.status(200).json({ venueList: result, message: "Search venue", status: true });
+        return response.status(404).json({ erro: "Not Found", status: false});
+    }).catch((err) => {
+        return response.status(500).json({ error: "Internal Server Error", status: false });
+    })
 }

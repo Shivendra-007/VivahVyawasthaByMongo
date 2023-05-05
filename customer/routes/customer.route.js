@@ -12,7 +12,6 @@ body("contact").notEmpty(),
 body("contact").isNumeric(),
 signup);
 router.post("/signin",signin);
-router.post("/signout",signout);
 router.post("/email",email);
 router.post("/updatePassword",updatePassword);
 router.post("/updateProfile",updateProfile);

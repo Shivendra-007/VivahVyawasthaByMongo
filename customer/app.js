@@ -1,22 +1,22 @@
 import bodyParser from "body-parser";
 import express from "express";
 import mongoose from "mongoose";
-// import nodemailer from "nodemailer";
-// import emailjs from "emailjs-com";
-// import cors from "cors";
+
+
+ import cors from "cors";
 import CustomerRouter from "./routes/customer.route.js"
 
 const app = express();
 
-mongoose.connect("mongodb://127.0.0.1/vivaah")
+mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/customer?retryWrites=true&w=majority")
     .then(result => {
-        // app.use(cors());
+        app.use(cors());
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true }));
 
-        app.use("/customer", CustomerRouter);
-        app.listen(3000, () => {
-            console.log("databases....");
+        app.use("/", CustomerRouter);
+        app.listen(8083, () => {
+            console.log("customer database connected");
             console.log("server started....");
         });
     })

@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.post("/save",
-   body("title").notEmpty(),
+   body("title", "title").notEmpty(),
    body("capacity").notEmpty(),
    body("address").notEmpty(),
    body("description").notEmpty(),
@@ -17,7 +17,7 @@ router.post("/save",
    body("license").notEmpty(),
    body("longitude").notEmpty(),
    body("latitude").notEmpty(),
-   body("vendorId").notEmpty(),uploads.any("image"),save)
+   body("vendorId").notEmpty(), uploads.any("image"), save)
 router.get("/fetchById/:id", fetchById)
 router.get("/allList", allList)
 router.post("/deactivate", removeById);
