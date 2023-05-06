@@ -26,7 +26,7 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/pan
     });
 
 
-app.use("/", panditRouter);
+app.use("/pandit", panditRouter);
 app.use("/feedback", feedbackRouter);
 app.use("/favourite", favouriteRouter);
 app.use("/request", requestRouter);

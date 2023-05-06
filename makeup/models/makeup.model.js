@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const makeupSchema = new mongoose.Schema({
+
     title: { type: String, required: true },
     address: { type: String, required: true },
     contactNumber: { type: String, required: true},
@@ -18,7 +19,7 @@ const makeupSchema = new mongoose.Schema({
 
     }],
     images: [],
-    vendorId: { type: String, required: true },
+    vendorId: { type: String, required: false },
     premium: {
         type: String,
         required: true,

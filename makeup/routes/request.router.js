@@ -9,12 +9,6 @@ router.delete("/remove/:id", remove);//done and check...
 
 
 export default router;
-/*
-http://localhost:8009/request/save
-http://localhost:8009/request/view
-http://localhost:8009/request/remove/{_id}
- */
-
 
 
 

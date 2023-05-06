@@ -12,9 +12,9 @@ router.post("/add",
   body("checkIn").notEmpty(),
   body("checkOut").notEmpty(),
   body("customerId").notEmpty(),
-
 add);
 router.post("/byVenueId",byVenueId);
+
 router.post("/remove",remove);
 router.post('/confirm',confirm);
 

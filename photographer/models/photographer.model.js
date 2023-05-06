@@ -7,7 +7,6 @@ const photoStudioSchema = new mongoose.Schema({
     experience: { type: String, required: true },
 
     thumbnail: { type: String },
-    licence: { type: String },
     rating: { type: String },
     description: {
         type: String,

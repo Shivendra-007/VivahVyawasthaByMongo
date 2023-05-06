@@ -1,23 +1,29 @@
 import Photographer from "../models/photographer.model.js";
 
 
-export const save=async(request,response,next)=>{
-    try{
-    const errors=await validationResult(request);
 
-    if(!errors.isEmpty())
-     return response.status(400).json({error:"bad request",status:true});
+export const save= (request, response, next) => {
+    console.log("data savesd")
+    try {
+        console.log(request.files);
+        let thumbnail = null;
+        let images = [];
+        request.files.map(file => {
+            if (file.fieldname != "file")
+                images.push(file.path)
+            else
+                thumbnail = file.path
+        });
 
-     const band=await Photographer.create(request.body);
-      return response.status(200).json({message:"photographer details saved",status:true});
+        let { title, description, price, address, rating, longitude, latitude, service, experience, contactNumber } = request.body
+        Photographer.create(({ images: images, thumbnail: thumbnail, price: price, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, experience: experience, contactNumber: contactNumber }))
+        return response.status(200).json({ message: "saved...", status: true });
+
     }
-    catch(err)
-    {
+    catch (err) {
         console.log(err);
-        return response.status(500).json({error:"internal server error",status:false});
+        return response.status(500).json({ error: "Internal server error", status: false });
     }
-
-
 }
 
 export const viewAll = (request, response, next) => {

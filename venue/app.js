@@ -5,7 +5,7 @@ import cors from "cors"
 
 const app=express();
 
-import VanueRouter from "./routes/venueDetails.route.js"
+import VanueRouter from "./routes/venueDetails.route.js"    
 import CategoryRouter from "./routes/category.route.js"
 import RequestRouter from "./routes/request.route.js"
 import BookingRouter from "./routes/booking.route.js"
@@ -17,7 +17,7 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/ven
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(cors())
-    app.use("/",VanueRouter)
+    app.use("/venue",VanueRouter)
     app.use("/category",CategoryRouter)
     app.use("/request",RequestRouter)
     app.use("/booking",BookingRouter)

@@ -2,7 +2,7 @@ import express from "express";
 import { activateBuggy, activeBuggyList, removeById, saveBuggy, search, viewAll, viewById } from "../controller/buggy.controller.js";
 import { body } from "express-validator";
 const router = express.Router();
-
+const uploads = multer({ dest: "public/Images/" });
 router.post("/save",
     body("title").notEmpty(),
     body("experince").notEmpty(),
@@ -13,8 +13,7 @@ router.post("/save",
     body("license").notEmpty(),
     body("services").notEmpty(),
     body("longitude").notEmpty(),
-    body("latitude").notEmpty()
-    , saveBuggy);
+    body("latitude").notEmpty(),uploads.any("image"), saveBuggy);
 router.post("/activeList", activeBuggyList)
 router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);

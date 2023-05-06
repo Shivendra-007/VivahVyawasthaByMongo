@@ -18,8 +18,6 @@ export const add=async(request,response,next)=>{
     {  console.log(err);
         return response.status(500).json({error:"internal server error",status:false});
     }
-
-
 }
 
 export const byVenueId= async(request,response,next)=>{
