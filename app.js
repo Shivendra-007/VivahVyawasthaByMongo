@@ -54,6 +54,11 @@ app.use( gateway({
       prefix: '/vender',
       target: 'http://localhost:8082/',  
     },
+
+    {
+      prefix: '/customer',
+      target: 'http://localhost:8083/',  
+    },
 ]
   })
 )

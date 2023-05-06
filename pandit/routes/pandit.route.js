@@ -1,5 +1,5 @@
 import express from "express";
-import {  search,  viewAll ,viewById, savepandit, activatepandit, activepanditList, removeById} from "../controller/pandit.controller.js";
+import {  search,  viewAll ,viewById, savepandit, activatepandit, activepanditList, removeById, premiumList} from "../controller/pandit.controller.js";
 import { body } from "express-validator";
 const router = express.Router();
 
@@ -22,6 +22,7 @@ router.get("/viewById/:id", viewById);
 router.get("/search/:keyword", search)
 router.post("/active",activatepandit);
 router.post("/removeById",removeById);
+router.get("/premiumList",premiumList)
 
 
 export default router;

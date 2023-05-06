@@ -38,16 +38,18 @@ import nodemailer from "nodemailer";
             }
           return reponse.status(400).json({error:"Bad request",status:false});   
     }
-    catch(error){
+    catch(err){
+       console.log(err);
         return reponse.status(500).json({message:"Internal server error ",status:false})
     }
   }
 
 
 
-export const signup = async(request,response,next)=>{   
+export const signup = async(request,response,next)=>{  
+  console.log(request.body) 
     try{
-        const errors =  validationResult(request);
+        const errors =  validationResult(request.body);
         if(!errors.isEmpty())
             return response.status(400).json({error:"Bad request",status:false,errors:errors.array()});
             const saltKey = await bcrypt.genSalt(10);
@@ -57,6 +59,7 @@ export const signup = async(request,response,next)=>{
         
     }
     catch(err){
+      console.log(err);
         return response.status(500).json({message:"Internal Server Error",status:false});
     }
 }
@@ -68,10 +71,11 @@ export  const signin = async (request,response,next)=>{
            if(status) { 
             let payload = {subject:customer.email};
             let token = jwt.sign(payload,'abcd');
-           return response.status(200).json({ message:"SighIn Successfully..",token:token,status:true}); 
+           return response.status(200).json({ customer,token:token,status:true}); 
            }
-           return response.status(400).json({error:"Bad Request",status : false});
+           return response.status(400).json({error:"Bad Request",status:false});
          }
+         return response.status(404).json({error:"request resores not found",status:false});
     }
     catch(err){
         return response.status(500).json({message:"Internal Server Error",status:false});
