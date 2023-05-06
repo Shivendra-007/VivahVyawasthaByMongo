@@ -50,7 +50,7 @@ export const topList = (request, response, next) => {
 
 
 export const viewById = (request, response, next) => {
-    const id = request.params.id;
+    const id = request.params._id;
 
     Makeup.findById(id)
         .then(result => {
@@ -70,13 +70,14 @@ export const viewById = (request, response, next) => {
 export const search = (request, response, next) => {
     Makeup.find({
         $or: [
-            { address: { $regex: request.params.keyword, $options: 'i' } },
-            { companyName: { $regex: request.params.keyword, $options: 'i' } },
-            { category: { $regex: request.params.keyword, $options: 'i' } },
-            { description: { $regex: request.params.keyword, $options: 'i' } }
+            { title: { $regex: request.params.query, $options: 'i' } },
+            { address: { $regex: request.params.query, $options: 'i' } },
+            { companyName: { $regex: request.params.query, $options: 'i' } },
+            { category: { $regex: request.params.query, $options: 'i' } },
+            { description: { $regex: request.params.query, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ makeup: result, message: "Search makeup", status: true });
+        return response.status(200).json({ makeup: result, message: "Search makeup", status: true,con:console.log( result) });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })

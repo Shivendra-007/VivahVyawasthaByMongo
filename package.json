@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Shivendra-007/VivahVyawasthaByMongo#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "fast-gateway": "^3.4.5"
   }

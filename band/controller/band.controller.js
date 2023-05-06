@@ -3,9 +3,11 @@ import Band from "../models/band.model.js";
 
 export const saveBand = async (request, response, next) => {
     try {
-        // const errors = await validationResult(request);
-        // if (!errors.isEmpty())
-        //     return response.status(400).json({ error: "bad request", status: true });
+        console.log(request.body.Band);
+         const errors = await validationResult(request);
+         console.log(errors)
+         if (!errors.isEmpty())
+             return response.status(400).json({ error: "bad request", status: true });
 
         const band = await Band.create(request.body.json);
         return response.status(200).json({ message: "venue details saved", status: true });

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const makeupSchema = new mongoose.Schema({
     title: { type: String, required: true },
     address: { type: String, required: true },
-    contactNumber: { type: String, required: true},
+    contactNumber: { type: String, required: true },
     longitude: { type: Number, required: true },
     latitude: { type: Number, required: true },
     experience: { type: String, required: true },

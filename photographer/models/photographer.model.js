@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 const photoStudioSchema = new mongoose.Schema({
     title: { type: String, required: true },
+    contactNumber: { type: String, required: true },
     address: { type: String, required: true },
     longitude: { type: Number, required: true },
     latitude: { type: Number, required: true },
     experience: { type: String, required: true },
-
     thumbnail: { type: String },
-    licence: { type: String },
     rating: { type: String },
     description: {
         type: String,

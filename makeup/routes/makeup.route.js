@@ -19,8 +19,8 @@ body("latitude").notEmpty()
 router.post("/activeList",activemakeupList)
 router.get("/view", viewAll);
 router.get("/topList", topList);
-router.get("/viewById/:id", viewById);
-router.get("/search/:keyword", search)
+router.get("/viewById", viewById);
+router.get("/search/:query", search)
 router.post("/active",activatemakeup);
 router.post("/removeById",removeById);
 
