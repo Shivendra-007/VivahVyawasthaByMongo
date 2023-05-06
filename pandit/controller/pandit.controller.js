@@ -116,3 +116,15 @@ export const removeById = async (request, response, next) => {
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }
+
+export const premiumList = (request, response, next) => {
+    Pandit.find().limit(10)
+        .then(result => {
+            
+            return response.status(200).json({ premiumPanditList: result, status: true });
+        })
+        .catch(err => {
+            console.log(err);
+            return response.status(500).json({ Message: "Internal Server error...", status: false });
+        });
+};

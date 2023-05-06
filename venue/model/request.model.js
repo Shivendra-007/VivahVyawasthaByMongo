@@ -18,11 +18,11 @@ const requestSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    dateFrom:{
+    checkIn:{
         type:String,
         required:true
     },
-    dateTo:{
+    checkOut:{
         type:String,
         required:true
     },
