@@ -55,3 +55,14 @@ export const update=async(request,response,next)=>{
         return response.status(500).json({error:"internal server error",status:false})
     }
 }
+export const getcategoryID = async(request,response)=>{
+    try{
+      //console.log(request.body)
+   let result = await Category.find({categoryName:request.body.categoryname});
+   return response.status(200).json(result);
+    }
+    catch(err)
+    {
+      console.log(err)
+    }
+  }

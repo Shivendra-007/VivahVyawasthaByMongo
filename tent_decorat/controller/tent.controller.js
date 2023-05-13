@@ -31,6 +31,7 @@ export const viewAll = (request, response, next) => {
 };
 
 
+
 export const viewById = (request, response, next) => {
     const id = request.params.id;
 
@@ -64,11 +65,22 @@ export const search = (request, response, next) => {
     })
 }
 
-export const activatetent = async (request, response, next) => {
+export const activate = async (request, response, next) => {
     try {
-        let tent = await tent.updateOne({ _id: request.body.tentId }, { status: "true" })
+        let tentDetails = await Tent.updateOne({ _id: request.body.ID }, { status: true })
+        if (tentDetails.modifiedCount)
+            return response.status(200).json({ message: "Tent activate succesfully", status: true });
+        return response.status(400).json({ error: "request not found", status: false });
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+export const deactivatevenue = async (request, response, next) => {
+    try {
+        let tent = await Tent.updateOne({ _id: request.body.ID }, { status: false })
         if (tent.modifiedCount)
-            return response.status(200).json({ message: "tent activate succesfully", status: true });
+            return response.status(200).json({ message: "Tent De-activate succesfully", status: true });
         return response.status(400).json({ error: "request not found", status: false });
     }
     catch (err) {

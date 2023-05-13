@@ -1,5 +1,5 @@
 import express from "express";
-import { activateBuggy, activeBuggyList, removeById, saveBuggy, search, viewAll, viewById } from "../controller/buggy.controller.js";
+import { activate, activeBuggyList, deactivatevenue, removeById, saveBuggy, search, viewAll, viewById } from "../controller/buggy.controller.js";
 import { body } from "express-validator";
 const router = express.Router();
 
@@ -19,7 +19,8 @@ router.post("/activeList", activeBuggyList)
 router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);
 router.get("/search/:keyword", search)
-router.post("/active", activateBuggy);
+router.post("/active", activate)
+router.post("/deactive", deactivatevenue);
 router.post("/removeById", removeById);
 
 export default router;

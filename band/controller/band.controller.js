@@ -64,9 +64,22 @@ export const search = (request, response, next) => {
 
 export const activateBand = async (request, response, next) => {
     try {
-        let band = await Band.updateOne({ _id: request.body.bandId }, { status: "true" })
+        let band = await Band.updateOne({ _id: request.body.ID }, { status: "true" })
         if (band.modifiedCount)
             return response.status(200).json({ message: "band activate succesfully", status: true });
+        return response.status(400).json({ error: "request not found", status: false });
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+
+}
+
+export const deactivatevenue = async (request, response, next) => {
+    try {
+        let band = await Band.updateOne({ _id: request.body.ID }, { status: false })
+        if (band.modifiedCount)
+            return response.status(200).json({ message: "Band De-activate succesfully", status: true });
         return response.status(400).json({ error: "request not found", status: false });
     }
     catch (err) {

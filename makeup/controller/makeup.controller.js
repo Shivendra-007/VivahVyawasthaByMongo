@@ -7,15 +7,15 @@ export const savemakeup = async (request, response, next) => {
 
     console.log(request.body.Makeups)
     try {
-        const errors =  validationResult(request.body.Makeups);
+        const errors = validationResult(request.body.Makeups);
         if (!errors.isEmpty())
-            return response.status(400).json({ error: "bad request",errors, status: false });
+            return response.status(400).json({ error: "bad request", errors, status: false });
 
         const makeup = await Makeup.create(request.body.Makeups);
-     
+
         return response.status(200).json({ message: "makeup artist details saved", status: true });
 
-   
+
     }
     catch (err) {
         console.log(err);
@@ -84,9 +84,20 @@ export const search = (request, response, next) => {
 
 export const activatemakeup = async (request, response, next) => {
     try {
-        let makeup = await Makeup.updateOne({ _id: request.body.makeupId }, { status: "true" })
+        let makeup = await Makeup.updateOne({ _id: request.body.ID }, { status: true })
         if (makeup.modifiedCount)
             return response.status(200).json({ message: "makeup activate succesfully", status: true });
+        return response.status(400).json({ error: "request not found", status: false });
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+export const deactivatemakeup = async (request, response, next) => {
+    try {
+        let makeup = await Makeup.updateOne({ _id: request.body.ID }, { status: false })
+        if (makeup.modifiedCount)
+            return response.status(200).json({ message: "makeup De-activate succesfully", status: true });
         return response.status(400).json({ error: "request not found", status: false });
     }
     catch (err) {
