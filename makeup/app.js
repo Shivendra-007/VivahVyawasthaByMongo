@@ -24,7 +24,7 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/mak
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true }));
 
-        app.use("/makeup", makeupRouter);
+        app.use("/", makeupRouter);
         app.use("/feedback", feedbackRouter);
         app.use("/favourite", favouriteRouter);
         app.use("/request", requestRouter);

@@ -1,5 +1,5 @@
 import express from "express";
-import { search, viewAll, viewById, activatemakeup, activemakeupList, removeById, topList,  savemakeup } from "../controller/makeup.controller.js";
+import { search, viewAll, viewById, activatemakeup, activemakeupList, removeById, topList,  savemakeup, byPrice } from "../controller/makeup.controller.js";
 import { body } from "express-validator";
 import multer from "multer";
 const router = express.Router();
@@ -25,6 +25,7 @@ router.get("/viewById/:id", viewById);
 router.get("/search/:keyword", search)
 router.post("/active", activatemakeup);
 router.post("/removeById", removeById);
+router.post("/byPrice",byPrice);
 
 
 export default router;

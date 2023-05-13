@@ -1,4 +1,5 @@
 import express from "express";
+import multer from "multer";
 
 import { activatePhotographer, activePhotographerList, removeById, save, search, viewAll, viewById } from "../controller/photographer.controller.js";
 

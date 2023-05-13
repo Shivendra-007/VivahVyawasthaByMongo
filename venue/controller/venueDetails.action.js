@@ -149,3 +149,47 @@ export const search = (request, response, next) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
 }
+
+
+export const byCategory = async (request, response, next) => {
+    try {
+        let venueDetails = await VenueDetails.find({ categoryId: request.body.categoryId })
+        return response.status(200).json({ venueList: venueDetails, status: true })
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+export const byCapacity = async (request, response, next) => {
+    try {
+        let venueDetails = await VenueDetails.find({ 
+            $and:[
+                {capacity:{$gt:request.body.first}},
+                {capacity:{$lte:request.body.second}}
+            ]
+        })
+        return response.status(200).json({ venueList: venueDetails, status: true })
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+
+export const byCharges = async (request, response, next) => {
+    try {
+        let venueDetails = await VenueDetails.find({ 
+            $and:[
+                {charges:{$gt:request.body.firstPrice}},
+                {charges:{$lte:request.body.secondPrice}}
+            ]
+        })
+        return response.status(200).json({ venueList: venueDetails, status: true })
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
