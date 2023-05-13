@@ -22,7 +22,7 @@ app.use( gateway({
       target: 'http://localhost:6063/',  
     },
     {
-      prefix: '/photgrapher',
+      prefix: '/photographer',
       target: 'http://localhost:6064/',  
     },
     {
@@ -59,9 +59,12 @@ app.use( gateway({
       prefix: '/customer',
       target: 'http://localhost:8083/',  
     },
-]
+],
+
+
   })
 )
+
 
 app.listen("8000",()=>{
     console.log("GateWay started");

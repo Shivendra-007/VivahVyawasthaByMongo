@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 import Pandit from "../models/pandit.model.js";
-export const saveBand= (request, response, next) => {
+export const savepandit= (request, response, next) => {
     console.log("data savesd")
     try {
         console.log(request.files);
@@ -27,7 +27,7 @@ export const saveBand= (request, response, next) => {
 export const viewAll = (request, response, next) => {
     Pandit.find()
         .then(result => {
-            console.log(result);
+           
             return response.status(200).json({ panditDetails: result, status: true });
         })
         .catch(err => {
@@ -59,12 +59,11 @@ export const search = (request, response, next) => {
     Pandit.find({
         $or: [
             { address: { $regex: request.params.keyword, $options: 'i' } },
-            { companyName: { $regex: request.params.keyword, $options: 'i' } },
-            { category: { $regex: request.params.keyword, $options: 'i' } },
+            { title: { $regex: request.params.keyword, $options: 'i' } },
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ pandit: result, message: "Search pandit", status: true });
+        return response.status(200).json({ panditList: result, message: "Search pandit", status: true });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
@@ -134,3 +133,23 @@ export const premiumList = (request, response, next) => {
             return response.status(500).json({ Message: "Internal Server error...", status: false });
         });
 };
+
+
+export const byCharges = async (request, response, next) => {
+   
+    console.log(request.body)
+    try {
+        let pandits = await Pandit.find();
+    
+    
+      let panditList=pandits.filter((pandit,index)=>{ 
+       return (pandit.services[0].price>=request.body.firstPrice&& pandit.services[0].price<=request.body.secondPrice)
+     });
+    
+         return response.status(200).json({ panditList: panditList, status: true })
+    }
+    catch (err) {
+        
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}

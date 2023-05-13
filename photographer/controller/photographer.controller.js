@@ -61,12 +61,11 @@ export const search = (request, response, next) => {
     Photographer.find({
         $or: [
             { address: { $regex: request.params.keyword, $options: 'i' } },
-            { companyName: { $regex: request.params.keyword, $options: 'i' } },
-            { category: { $regex: request.params.keyword, $options: 'i' } },
+            { title: { $regex: request.params.keyword, $options: 'i' } },
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ Band: result, message: "Search photographer", status: true });
+        return response.status(200).json({ photographerList: result, message: "Search photographer", status: true });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })

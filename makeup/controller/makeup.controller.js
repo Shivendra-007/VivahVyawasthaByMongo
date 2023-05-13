@@ -29,7 +29,7 @@ export const savemakeup = (request, response, next) => {
 export const viewAll = (request, response, next) => {
     Makeup.find()
         .then(result => {
-            console.log(result);
+            
             return response.status(200).json({ makeupDetails: result, status: true });
         })
         .catch(err => {
@@ -42,7 +42,7 @@ export const viewAll = (request, response, next) => {
 export const topList = (request, response, next) => {
     Makeup.find().limit(10)
         .then(result => {
-            console.log(result);
+            
             return response.status(200).json({ makeupDetails: result, status: true });
         })
         .catch(err => {
@@ -75,11 +75,10 @@ export const search = (request, response, next) => {
         $or: [
             { address: { $regex: request.params.keyword, $options: 'i' } },
             { companyName: { $regex: request.params.keyword, $options: 'i' } },
-            { category: { $regex: request.params.keyword, $options: 'i' } },
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ makeup: result, message: "Search makeup", status: true });
+        return response.status(200).json({ makeupList: result, message: "Search makeup", status: true });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
@@ -138,4 +137,24 @@ export const removeById = async (request, response, next) => {
     }
 }
 
+
+export const byPrice = async (request, response, next) => {
+    console.log(request.body)
+    try {
+        let makeups = await Makeup.find();
+    
+    
+      let make=makeups.filter((makeup,index)=>{ 
+         return (makeup.services[0].price>=request.body.firstPrice&& makeup.services[0].price<=request.body.secondPrice)
+      
+        
+    
+     });
+         return response.status(200).json({ makeupList: make, status: true })
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
 

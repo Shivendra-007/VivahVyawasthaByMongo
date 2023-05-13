@@ -22,7 +22,7 @@ export const save=async(request,response,next)=>{
 export const list= async(request,response,next)=>{
  try{
     let category=await Category.find()
-    return response.status(200).json({categoryList:category,status:true})
+    return response.status(200).json({venueCategoryList:category,status:true})
  }
  catch(err)
  {

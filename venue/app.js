@@ -10,6 +10,7 @@ import CategoryRouter from "./routes/category.route.js"
 import RequestRouter from "./routes/request.route.js"
 import BookingRouter from "./routes/booking.route.js"
 import FavouriteRouter from "./routes/favourite.route.js"
+
 mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/venue?retryWrites=true&w=majority")
 .then(result=>{
     console.log("Database connect");
@@ -17,11 +18,12 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/ven
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(cors())
-    app.use("/venue",VanueRouter)
+    app.use("/",VanueRouter)
     app.use("/category",CategoryRouter)
     app.use("/request",RequestRouter)
     app.use("/booking",BookingRouter)
     app.use("/favourite",FavouriteRouter)
+    
     
     app.listen("6060",()=>{
         console.log("server started");
