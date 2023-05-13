@@ -1,5 +1,5 @@
 import express from "express";
-import { add, byVenueId, confirm, remove } from "../controller/request.action.js";
+import { add, byvenueId, confirm, remove } from "../controller/request.action.js";
 import {body} from "express-validator";
 
 const router =express.Router();
@@ -13,7 +13,7 @@ router.post("/add",
   body("checkOut").notEmpty(),
   body("customerId").notEmpty(),
 add);
-router.post("/byVenueId",byVenueId);
+router.post("/byVenueId",byvenueId);
 
 router.post("/remove",remove);
 router.post('/confirm',confirm);

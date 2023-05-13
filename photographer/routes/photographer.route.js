@@ -4,8 +4,8 @@ import multer from "multer";
 import { activatePhotographer, activePhotographerList, removeById, save, search, viewAll, viewById } from "../controller/photographer.controller.js";
 
 const router = express.Router();
-const uploads = multer({ dest: "public/Images/" });
-router.post("/save", save),uploads.any("image");
+// const uploads = multer({ dest: "public/Images/" });
+router.post("/save", save),
 router.post("/activeList",activePhotographerList)
 router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);
@@ -14,3 +14,4 @@ router.post("/active",activatePhotographer);
 router.post("/removeById",removeById);
 
 export default router;
+//uploads.any("image");

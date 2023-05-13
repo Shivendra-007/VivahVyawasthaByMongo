@@ -7,29 +7,30 @@ export const save = (request, response, next) => {
     console.log("data savesd")
     console.log(request.files);
     try {
-    console.log(request.files);
-    let thumbnail = null;
-    let licence = null;
-    let images = [];
-    request.files.map(file => {
-        if (file.fieldname != "file")
-            images.push(file.path)
-        else
-            thumbnail = file.path
+        console.log(request.files);
+        let thumbnail = null;
+        let license = null;
+        let images = [];
+        request.files.map(file => {
+            if (file.fieldname != "file")
+                images.push(file.path)
+            else {
+                thumbnail = file.path
+                license = file.path
+            }
 
-        licence = file.path
-    });
+        });
 
-    let { title, capacity, charges, contactNumber, address, longitude, latitude, service, description, category, rating, NonvegPrice, vegPrice, } = request.body
+        
 
-    VenueDetails.create(({ images: images, licence: licence, thumbnail: thumbnail, charges: charges, capacity: capacity, category: category, NonvegPrice: NonvegPrice, vegPrice: vegPrice, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, contactNumber: contactNumber }))
-    return response.status(200).json({ message: "saved...", status: true });
+        VenueDetails.create(({ images: images, license: license, thumbnail: thumbnail, charges: charges,vendorId:vendorId, capacity: capacity, category: category, NonvegPrice: NonvegPrice, vegPrice: vegPrice, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, contactNumber: contactNumber }))
+        return response.status(200).json({ message: "saved...", status: true });
 
-}
-catch (err) {
-    console.log(err);
-    return response.status(500).json({ error: "Internal server error", status: false });
-}
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "Internal server error", status: false });
+    }
 }
 export const uploadPost = async (request, response) => {
     console.log(request)
@@ -140,10 +141,10 @@ export const search = (request, response, next) => {
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-       
-       if(result.length)
-        return response.status(200).json({ venueList: result, message: "Search venue", status: true });
-        return response.status(404).json({ erro: "Not Found", status: false});
+
+        if (result.length)
+            return response.status(200).json({ venueList: result, message: "Search venue", status: true });
+        return response.status(404).json({ erro: "Not Found", status: false });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })

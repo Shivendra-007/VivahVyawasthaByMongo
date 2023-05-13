@@ -1,6 +1,7 @@
 import express from "express";
-import {  search,  viewAll ,viewById, savecaterer, activatecaterer, activecatererList, removeById} from "../controller/caterers.controller.js";
+import {  search,viewById, savecaterer, activatecaterer, activecatererList, removeById} from "../controller/caterers.controller.js";
 import { body } from "express-validator";
+import multer from "multer";
 const router = express.Router();
 const uploads = multer({ dest: "public/Images/" });
 router.post("/save",
@@ -15,7 +16,7 @@ body("services").notEmpty(),
 body("longitude").notEmpty(),
 body("latitude").notEmpty(),uploads.any("image"),savecaterer);              
 router.post("/activeList",activecatererList)
-router.get("/view", viewAll);
+// router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);
 router.get("/search/:keyword", search)
 router.post("/active",activatecaterer);
