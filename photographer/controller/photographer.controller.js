@@ -1,30 +1,49 @@
+import { validationResult } from "express-validator";
 import Photographer from "../models/photographer.model.js";
 
-
-
-export const save= (request, response, next) => {
-    console.log("data savesd")
+export const save = async (request, response, next) => {
+    console.log(request.body.Photographer)
     try {
-        console.log(request.files);
-        let thumbnail = null;
-        let images = [];
-        request.files.map(file => {
-            if (file.fieldname != "file")
-                images.push(file.path)
-            else
-                thumbnail = file.path
-        });
+        const errors = await  validationResult(request.body.Photographer);
+        console.log(request.body.Photographer)
+        if (!errors.isEmpty())
+            return response.status(400).json({ error: "bad request", status: true });
 
-        let { title, description, price, address, rating, longitude, latitude, service, experience, contactNumber } = request.body
-        Photographer.create(({ images: images, thumbnail: thumbnail, price: price, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, experience: experience, contactNumber: contactNumber }))
-        return response.status(200).json({ message: "saved...", status: true });
-
+        const photo = await Photographer.create(request.body.Photographer);
+        return response.status(200).json({ message: "Photographer details saved", status: true });
     }
     catch (err) {
         console.log(err);
-        return response.status(500).json({ error: "Internal server error", status: false });
+        return response.status(500).json({ error: "internal server error", status: false });
     }
+
+
 }
+
+
+// export const save= (request, response, next) => {
+//     console.log("data savesd")
+//     try {
+//         console.log(request.files);
+//         let thumbnail = null;
+//         let images = [];
+//         request.files.map(file => {
+//             if (file.fieldname != "file")
+//                 images.push(file.path)
+//             else
+//                 thumbnail = file.path
+//         });
+
+//         let { title, description, price, address, rating, longitude, latitude, service, experience, contactNumber } = request.body
+//         Photographer.create(({ images: images, thumbnail: thumbnail, price: price, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, experience: experience, contactNumber: contactNumber }))
+//         return response.status(200).json({ message: "saved...", status: true });
+
+//     }
+//     catch (err) {
+//         console.log(err);
+//         return response.status(500).json({ error: "Internal server error", status: false });
+//     }
+// }
 
 export const viewAll = (request, response, next) => {
     Photographer.find()

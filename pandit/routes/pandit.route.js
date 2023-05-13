@@ -1,6 +1,7 @@
 import express from "express";
 import {  search,  viewAll ,viewById, savepandit, activatepandit, activepanditList, removeById, premiumList} from "../controller/pandit.controller.js";
 import { body } from "express-validator";
+import multer from "multer";
 const router = express.Router();
 const uploads = multer({ dest: "public/Images/" });
 router.post("/save",

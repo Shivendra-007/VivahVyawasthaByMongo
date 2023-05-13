@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import { Booking } from "../model/bookingDetails.model.js";
 
 export const saveBooking=async(request,response,next)=>{

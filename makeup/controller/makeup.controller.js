@@ -14,9 +14,8 @@ export const savemakeup = (request, response, next) => {
             else
                 thumbnail = file.path
         });
-      
-        let { title, description, price, address, rating, longitude, latitude, service, experience,contactNumber } = request.body
-        Makeup.create(({ images: images, thumbnail: thumbnail, price: price, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, experience: experience,contactNumber:contactNumber }))
+
+        Makeup.create(request.body)
         return response.status(200).json({ message: "saved...", status: true });
 
     }

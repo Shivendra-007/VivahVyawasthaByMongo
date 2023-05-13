@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 import Pandit from "../models/pandit.model.js";
-export const saveBand= (request, response, next) => {
+export const savepandit= (request, response, next) => {
     console.log("data savesd")
     try {
         console.log(request.files);
