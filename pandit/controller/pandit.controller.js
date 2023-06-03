@@ -2,12 +2,14 @@ import { validationResult } from "express-validator";
 import Pandit from "../models/pandit.model.js";
 
 export const savepandit = async (request, response, next) => {
+    console.log(request.body.panditDetails)
     try {
-        const errors = await validationResult(request);
+        const errors = await validationResult(request.body.panditDetails);
+
         if (!errors.isEmpty())
             return response.status(400).json({ error: "bad request", status: true });
 
-        const pandit = await Pandit.create(request.body);
+        const pandit = await Pandit.create(request.body.panditDetails);
         return response.status(200).json({ message: "pandit details saved", status: true });
     }
     catch (err) {
@@ -33,7 +35,6 @@ export const viewAll = (request, response, next) => {
 
 export const viewById = (request, response, next) => {
     const id = request.params.id;
-
     Pandit.findById(id)
         .then(result => {
             if (result) {
@@ -64,11 +65,22 @@ export const search = (request, response, next) => {
     })
 }
 
-export const activatepandit = async (request, response, next) => {
+export const activate = async (request, response, next) => {
     try {
-        let pandit = await Pandit.updateOne({ _id: request.body.panditId }, { status: "true" })
+        let panditDetails = await Pandit.updateOne({ _id: request.body.ID }, { status: true })
+        if (panditDetails.modifiedCount)
+            return response.status(200).json({ message: "Pandit activate succesfully", status: true });
+        return response.status(400).json({ error: "request not found", status: false });
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+export const deactivate = async (request, response, next) => {
+    try {
+        let pandit = await Pandit.updateOne({ _id: request.body.ID }, { status: false })
         if (pandit.modifiedCount)
-            return response.status(200).json({ message: "pandit activate succesfully", status: true });
+            return response.status(200).json({ message: "Pandit De-activate succesfully", status: true });
         return response.status(400).json({ error: "request not found", status: false });
     }
     catch (err) {
@@ -76,9 +88,18 @@ export const activatepandit = async (request, response, next) => {
     }
 }
 
+export const deactivepanditList = async (request, response, next) => {
+    try {
+        let pandit = await Pandit.find({ status: false })
+        return response.status(200).json({ panditList: pandit, status: true })
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
 export const activepanditList = async (request, response, next) => {
     try {
-        let pandit = await Pandit.find({ status: "true" })
+        let pandit = await Pandit.find({ status: true })
         return response.status(200).json({ panditList: pandit, status: true })
     }
     catch (err) {
@@ -120,7 +141,7 @@ export const removeById = async (request, response, next) => {
 export const premiumList = (request, response, next) => {
     Pandit.find().limit(10)
         .then(result => {
-            
+
             return response.status(200).json({ premiumPanditList: result, status: true });
         })
         .catch(err => {

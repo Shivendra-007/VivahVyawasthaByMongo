@@ -11,22 +11,22 @@ const panditSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-      },
+    },
     services: [{
         service: { type: String, required: true },
-        price: { type: Number, required: true }, 
+        price: { type: Number, required: true },
     }],
     images: [],
-    vendorId: { type: Number, required: true },
+    vendorId: { type: String, required: true },
     premium: {
-        type: String,
+        type: Boolean,
         required: true,
-        default: "false"
+        default: false
     },
-    status:{
-        type:String,
-        required:true,
-        default:'false'
+    status: {
+        type: Boolean,
+        required: true,
+        default: false
     },
 
 });

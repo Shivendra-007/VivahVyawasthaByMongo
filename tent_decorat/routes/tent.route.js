@@ -1,5 +1,5 @@
 import express from "express";
-import { search, viewAll, viewById, savetent, activetentList, removeById, activate, deactivatevenue } from "../controller/tent.controller.js";
+import { search, viewAll, viewById, savetent, activetentList, removeById, activate, deactivate } from "../controller/tent.controller.js";
 import { body } from "express-validator";
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.get("/view", viewAll);
 router.get("/viewById/:id", viewById);
 router.get("/search/:keyword", search)
 router.post("/activate", activate)
-router.post("/deactive", deactivatevenue);
+router.post("/deactive", deactivate);
 router.post("/removeById", removeById);
 
 

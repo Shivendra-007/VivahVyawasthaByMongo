@@ -8,7 +8,7 @@ export const savemehandi = async (request, response, next) => {
             return response.status(400).json({ error: "bad request", status: true });
 
         const mehandi = await Mehandi.create(request.body);
-        return response.status(200).json({ message: "venue details saved", status: true });
+        return response.status(200).json({ message: "Mehandi details saved", status: true });
     }
     catch (err) {
         console.log(err);
@@ -64,11 +64,22 @@ export const search = (request, response, next) => {
     })
 }
 
-export const activatemehandi = async (request, response, next) => {
+export const activate = async (request, response, next) => {
     try {
-        let mehandi = await Mehandi.updateOne({ _id: request.body.mehandiId }, { status: "true" })
-        if (mehandi.modifiedCount)
-            return response.status(200).json({ message: "mehandi activate succesfully", status: true });
+        let tentDetails = await Mehandi.updateOne({ _id: request.body.ID }, { status: true })
+        if (tentDetails.modifiedCount)
+            return response.status(200).json({ message: "Mehandi activate succesfully", status: true });
+        return response.status(400).json({ error: "request not found", status: false });
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+export const deactivate = async (request, response, next) => {
+    try {
+        let tent = await Mehandi.updateOne({ _id: request.body.ID }, { status: false })
+        if (tent.modifiedCount)
+            return response.status(200).json({ message: "Mehandi De-activate succesfully", status: true });
         return response.status(400).json({ error: "request not found", status: false });
     }
     catch (err) {

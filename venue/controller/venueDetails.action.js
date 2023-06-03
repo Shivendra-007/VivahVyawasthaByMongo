@@ -78,7 +78,7 @@ export const deactivatevenue = async (request, response, next) => {
 
 export const activeList = async (request, response, next) => {
     try {
-        let venueDetails = await VenueDetails.find({ status: "true" })
+        let venueDetails = await VenueDetails.find({ status: true })
         return response.status(200).json({ venueList: venueDetails, status: true })
     }
     catch (err) {

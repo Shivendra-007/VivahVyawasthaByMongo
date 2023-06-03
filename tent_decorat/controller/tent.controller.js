@@ -14,8 +14,6 @@ export const savetent = async (request, response, next) => {
         console.log(err);
         return response.status(500).json({ error: "internal server error", status: false });
     }
-
-
 }
 
 export const viewAll = (request, response, next) => {
@@ -76,7 +74,7 @@ export const activate = async (request, response, next) => {
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }
-export const deactivatevenue = async (request, response, next) => {
+export const deactivate = async (request, response, next) => {
     try {
         let tent = await Tent.updateOne({ _id: request.body.ID }, { status: false })
         if (tent.modifiedCount)

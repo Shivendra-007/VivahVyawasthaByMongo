@@ -24,9 +24,9 @@ const tentSchema = new mongoose.Schema({
         default: "false"
     },
     status: {
-        type: String,
+        type: Boolean,
         required: true,
-        default: 'false'
+        default: false
     },
 
 });

@@ -4,12 +4,12 @@ import Buggy from "../models/buggyDetails.model.js";
 
 export const saveBuggy = async (request, response, next) => {
     try {
-        const errors = await validationResult(request);
+        const errors = await validationResult(request.body.Ghodi);
 
         if (!errors.isEmpty())
             return response.status(400).json({ error: "bad request", status: true });
 
-        const band = await Buggy.create(request.body);
+        const band = await Buggy.create(request.body.Ghodi);
         return response.status(200).json({ message: "buggyDetails saved", status: true });
     }
     catch (err) {
@@ -20,8 +20,20 @@ export const saveBuggy = async (request, response, next) => {
 
 }
 
+// export const viewAll = (request, response, next) => {
+//     Buggy.find()
+//         .then(result => {
+//             console.log(result);
+//             return response.status(200).json({ BuggyDetails: result, status: true });
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             return response.status(500).json({ Message: "Internal Server error...", status: false });
+//         });
+// };
 export const viewAll = (request, response, next) => {
     Buggy.find()
+        .sort({ _id: -1 }) // Sort the results by createdAt field in ascending order
         .then(result => {
             console.log(result);
             return response.status(200).json({ BuggyDetails: result, status: true });
@@ -31,8 +43,6 @@ export const viewAll = (request, response, next) => {
             return response.status(500).json({ Message: "Internal Server error...", status: false });
         });
 };
-
-
 export const viewById = (request, response, next) => {
     const id = request.params.id;
 

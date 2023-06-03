@@ -12,8 +12,6 @@ export const save = async (request, response, next) => {
         const makeup = await Photographer.create(request.body.Photographers);
 
         return response.status(200).json({ message: "Photographer artist details saved", status: true });
-
-
     }
     catch (err) {
         console.log(err);
@@ -21,17 +19,19 @@ export const save = async (request, response, next) => {
     }
 }
 
+
 export const viewAll = (request, response, next) => {
     Photographer.find()
         .then(result => {
             console.log(result);
-            return response.status(200).json({ photographers: result, status: true });
+            return response.status(200).json({ photographerDetails: result, status: true });
         })
         .catch(err => {
             console.log(err);
             return response.status(500).json({ Message: "Internal Server error...", status: false });
         });
 };
+
 
 
 export const viewById = (request, response, next) => {
@@ -66,22 +66,21 @@ export const search = (request, response, next) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
 }
-
-export const activatePhotographer = async (request, response, next) => {
+export const activate = async (request, response, next) => {
     try {
-        let photographer = await Photographer.updateOne({ _id: request.body.ID }, { status: "true" })
-        if (photographer.modifiedCount)
-            return response.status(200).json({ message: "photographer activate succesfully", status: true });
+        let tentDetails = await Photographer.updateOne({ _id: request.body.ID }, { status: true })
+        if (tentDetails.modifiedCount)
+            return response.status(200).json({ message: "Photographer activate succesfully", status: true });
         return response.status(400).json({ error: "request not found", status: false });
     }
     catch (err) {
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }
-export const deactivatevenue = async (request, response, next) => {
+export const deactivate = async (request, response, next) => {
     try {
-        let makeup = await Photographer.updateOne({ _id: request.body.ID }, { status: false })
-        if (makeup.modifiedCount)
+        let tent = await Photographer.updateOne({ _id: request.body.ID }, { status: false })
+        if (tent.modifiedCount)
             return response.status(200).json({ message: "Photographer De-activate succesfully", status: true });
         return response.status(400).json({ error: "request not found", status: false });
     }
@@ -89,7 +88,6 @@ export const deactivatevenue = async (request, response, next) => {
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }
-
 export const activePhotographerList = async (request, response, next) => {
     try {
         let photographer = await Photographer.find({ status: "true" })
