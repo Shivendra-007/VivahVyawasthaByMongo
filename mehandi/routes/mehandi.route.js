@@ -1,5 +1,5 @@
 import express from "express";
-import {  search,  viewAll ,viewById, savemehandi, activatemehandi, activemehandiList, removeById, topList} from "../controller/mehandi.controller.js";
+import {  search,  viewAll ,viewById, savemehandi, activatemehandi, activemehandiList, removeById, topList, byPrice, byService} from "../controller/mehandi.controller.js";
 import { body } from "express-validator";
 import multer from "multer";
 const router = express.Router();
@@ -23,6 +23,8 @@ router.get("/viewById/:id", viewById);
 router.get("/search/:keyword", search)
 router.post("/active",activatemehandi);
 router.post("/removeById",removeById);
+router.post("/byCharges",byPrice);
+router.post("/byService",byService);
 
 
 export default router;

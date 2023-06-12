@@ -28,8 +28,7 @@ export const savetent= (request, response, next) => {
 export const viewAll = (request, response, next) => {
     Tent.find()
         .then(result => {
-            console.log(result);
-            return response.status(200).json({ tentDetails: result, status: true });
+            return response.status(200).json({ tentList: result, status: true });
         })
         .catch(err => {
             console.log(err);
@@ -60,12 +59,11 @@ export const search = (request, response, next) => {
     Tent.find({
         $or: [
             { address: { $regex: request.params.keyword, $options: 'i' } },
-            { companyName: { $regex: request.params.keyword, $options: 'i' } },
-            { category: { $regex: request.params.keyword, $options: 'i' } },
+            { title: { $regex: request.params.keyword, $options: 'i' } },
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ tent: result, message: "Search tent", status: true });
+        return response.status(200).json({ tentList: result, message: "Search tent", status: true });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
@@ -123,3 +121,41 @@ export const removeById = async (request, response, next) => {
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }
+
+export const byPrice = async (request, response, next) => {
+
+    try {
+        let tents = await Tent.find();
+      let tent=tents.filter((tent,index)=>{ 
+         return (tent.services[0].price>=request.body.firstPrice&& tent.services[0].price<=request.body.secondPrice)
+     });
+         return response.status(200).json({tentList: tent, status: true })
+    }
+    catch (err) {
+
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+export const byService = async (request, response, next) => {
+   
+    try {
+        let tents = await Tent.find();
+        let select = [];
+    
+      let tent=tents.map((tent,index)=>{ 
+        tent.services.map((service)=>{
+            if(service.service.toLowerCase()==request.body.serviceName.toLowerCase())
+                select.push(photographer)
+            
+        })
+        
+     });
+                 return response.status(200).json({ tentList: select, status: true })
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+

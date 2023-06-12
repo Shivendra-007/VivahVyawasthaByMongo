@@ -23,29 +23,29 @@ export const save = async (request, response, next) => {
 }
 
 
-// export const saveBand= (request, response, next) => {
-//     console.log("data savesd")
-//     try {
-//         console.log(request.files);
-//         let thumbnail = null;
-//         let images = [];
-//         request.files.map(file => {
-//             if (file.fieldname != "file")
-//                 images.push(file.path)
-//             else
-//                 thumbnail = file.path
-//         });
+export const saveBand= (request, response, next) => {
+    console.log("data savesd")
+    try {
+        console.log(request.files);
+        let thumbnail = null;
+        let images = [];
+        request.files.map(file => {
+            if (file.fieldname != "file")
+                images.push(file.path)
+            else
+                thumbnail = file.path
+        });
 
-//         let { title, description, price, address, rating, longitude, latitude, service, experience, contactNumber } = request.body
-//         Band.create(({ images: images, thumbnail: thumbnail, price: price, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, experience: experience, contactNumber: contactNumber }))
-//         return response.status(200).json({ message: "saved...", status: true });
+        let { title, description, price, address, rating, longitude, latitude, service, experience, contactNumber } = request.body
+        Band.create(({ images: images, thumbnail: thumbnail, price: price, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, experience: experience, contactNumber: contactNumber }))
+        return response.status(200).json({ message: "saved...", status: true });
 
-//     }
-//     catch (err) {
-//         console.log(err);
-//         return response.status(500).json({ error: "Internal server error", status: false });
-//     }
-// }
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "Internal server error", status: false });
+    }
+}
 
 
 
@@ -71,12 +71,11 @@ export const search = (request, response, next) => {
     Band.find({
         $or: [
             { address: { $regex: request.params.keyword, $options: 'i' } },
-            { companyName: { $regex: request.params.keyword, $options: 'i' } },
-            { category: { $regex: request.params.keyword, $options: 'i' } },
+            { title: { $regex: request.params.keyword, $options: 'i' } },
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ Band: result, message: "Search Band", status: true });
+        return response.status(200).json({ bandList: result, message: "Search Band", status: true });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
@@ -131,6 +130,54 @@ export const removeById = async (request, response, next) => {
         return response.status(400).json({ error: "request not found", status: false });
     }
     catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+export const viewAll = async (request, response, next) => {
+    try {
+        let band = await Band.find()
+        return response.status(200).json({ bandList: band, status: true })
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+
+export const byPrice = async (request, response, next) => {
+
+    try {
+        let bands = await Band.find();
+      let band=bands.filter((band,index)=>{ 
+         return (band.services[0].price>=request.body.firstPrice&& band.services[0].price<=request.body.secondPrice)
+     });
+         return response.status(200).json({bandList: band, status: true })
+    }
+    catch (err) {
+
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+export const byService = async (request, response, next) => {
+   
+    try {
+        let bands = await Band.find();
+        let select = [];
+    
+      let band=bands.map((band,index)=>{ 
+        band.services.map((service)=>{
+            if(service.service.toLowerCase()==request.body.serviceName.toLowerCase())
+                select.push(band)
+            
+        })
+        
+     });
+                 return response.status(200).json({ bandList: select, status: true })
+    }
+    catch (err) {
+        console.log(err);
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }

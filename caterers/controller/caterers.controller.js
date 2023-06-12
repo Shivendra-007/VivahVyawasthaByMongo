@@ -41,17 +41,16 @@ export const savecaterer = async (request, response, next) => {
 //     }
 // }
 
-// export const viewAll = (request, response, next) => {
-//     Caterer.find()
-//         .then(result => {
-//             console.log(result);
-//             return response.status(200).json({ catererDetails: result, status: true });
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             return response.status(500).json({ Message: "Internal Server error...", status: false });
-//         });
-// };
+export const viewAll = (request, response, next) => {
+    Caterer.find()
+        .then(result => {
+            return response.status(200).json({ caterersDetails: result, status: true });
+        })
+        .catch(err => {
+            console.log(err);
+            return response.status(500).json({ Message: "Internal Server error...", status: false });
+        });
+};
 
 
 export const viewById = (request, response, next) => {
@@ -77,11 +76,10 @@ export const search = (request, response, next) => {
         $or: [
             { address: { $regex: request.params.keyword, $options: 'i' } },
             { title: { $regex: request.params.keyword, $options: 'i' } },
-            { category: { $regex: request.params.keyword, $options: 'i' } },
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ caterer: result, message: "Search caterer", status: true });
+        return response.status(200).json({ caterersList: result, message: "Search caterer", status: true });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
@@ -136,6 +134,44 @@ export const removeById = async (request, response, next) => {
         return response.status(400).json({ error: "request not found", status: false });
     }
     catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+
+export const byPrice = async (request, response, next) => {
+
+    try {
+        let caterers = await Caterer.find();
+      let caterer=caterers.filter((caterer,index)=>{ 
+         return (caterer.services[0].price>=request.body.firstPrice&& caterer.services[0].price<=request.body.secondPrice)
+     });
+         return response.status(200).json({caterersList: caterer, status: true })
+    }
+    catch (err) {
+
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+export const byService = async (request, response, next) => {
+   
+    try {
+        let caterers = await Caterer.find();
+        let select = [];
+    
+      let caterer=caterers.map((caterer,index)=>{ 
+        caterer.services.map((service)=>{
+            if(service.service.toLowerCase()==request.body.serviceName.toLowerCase())
+                select.push(caterer)
+            
+        })
+        
+     });
+                 return response.status(200).json({ caterersList: select, status: true })
+    }
+    catch (err) {
+        
         return response.status(500).json({ error: "internal server error", status: false });
     }
 }

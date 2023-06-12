@@ -27,7 +27,7 @@ const requestSchema=new mongoose.Schema({
         required:true
     },
     customerId:{
-        type:Number,
+        type:String,
         required:true
     },
     venueDetailsId:{

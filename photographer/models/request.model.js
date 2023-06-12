@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const requestSchema = new mongoose.Schema({
-  customerName: {
+  contactPerson: {
     type: String,
     required: true,
     unique: true
@@ -10,23 +10,26 @@ const requestSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  totalGeust: {
-    type: Number,
-    required: true
-  },
   customerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
+    type:String,
     required: true
   },
   photoGrapherId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'stdio',
+    ref: 'photographer',
     required: true
+  },
+  eventDate:{
+   type:String,
+   required:true
+  },
+  typeOfEvent:{
+   type:String,
+   required:true
   },
   requestDate: {
     type: Date,
-    default: Date.now
+    default: new Date().toString().substring(4, 15).replaceAll(' ', '-')
   }
 });
 
