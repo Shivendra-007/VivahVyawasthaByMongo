@@ -1,49 +1,34 @@
 
+
+
 import { VenueDetails } from "../model/venueDetails.model.js"
-import { validationResult } from "express-validator";
-
-
 export const save = (request, response, next) => {
-    console.log("data savesd")
-    console.log(request.files);
     try {
-        console.log(request.files);
+        console.log(request.file);
         let thumbnail = null;
         let license = null;
-        let images = [];
-        request.files.map(file => {
-            if (file.fieldname != "file")
-                images.push(file.path)
+        let image = [];
+
+        request.file.map(file => {
+            
+            if (file.fieldname != "image"){
+                image.push(file.path)
+            }
+            if (file.fieldname == "thumbnail"){
+            thumbnail = file.path
+            }
             else {
-                thumbnail = file.path
                 license = file.path
             }
-
         });
-
-        
-
-        VenueDetails.create(({ images: images, license: license, thumbnail: thumbnail, charges: charges,vendorId:vendorId, capacity: capacity, category: category, NonvegPrice: NonvegPrice, vegPrice: vegPrice, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, contactNumber: contactNumber }))
+        console.log(thumbnail)
+        let { title, description, charges, capacity, category, NonvegPrice, vegPrice, address, vendorId, rating, longitude, latitude, service, contactNumber, } = request.body
+        VenueDetails.create(({ images: images, charges: charges, license: license, thumbnail: thumbnail, vendorId: vendorId, capacity: capacity, category: category, NonvegPrice: NonvegPrice, vegPrice: vegPrice, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, contactNumber: contactNumber }))
         return response.status(200).json({ message: "saved...", status: true });
-
     }
     catch (err) {
         console.log(err);
         return response.status(500).json({ error: "Internal server error", status: false });
-    }
-}
-export const uploadPost = async (request, response) => {
-    console.log(request)
-    let file = (request.file) ? request.file.filename : null;
-
-    console.log(file)
-    try {
-        request.body.isLiked = false;
-
-        Post.create(request.body)
-        return response.status(200).json({ message: "post uploaded by user ", status: true });
-    } catch (err) {
-        return response.status(500).json({ result: "internal server error", status: false });
     }
 }
 export const removeById = async (request, response, next) => {
@@ -103,23 +88,31 @@ export const activeList = async (request, response, next) => {
 }
 
 export const saveImages = async (request, response, next) => {
+    console.log(request.body)
+    console.log(request.files);
     try {
-        let venue = await find({ _id: request.params.id })
-        if (!venue)
-            return response.status(404).json({ error: "request resorses not found", status: false })
+        const venueDetails = await VenueDetails.findOne({ venueDetailsId: request.body._id });
 
-        await (request.body.image).map((img, index) => {
-            venue.images.push(img)
-        })
-        venue.save();
-        return response.json({ message: "images save", status: true })
-
-    }
-    catch (err) {
+        console.log("data transfer")
+        if (!venueDetails) {
+            return response.status(404).json({ error: "Requested resource not found", status: false });
+        }
+        console.log("Data passed");
+        if (Array.isArray(request.files)) {
+            request.files.forEach((file) => {
+                if (file.fieldname !== "files") {
+                    venueDetails.images.push(file.path);
+                }
+            });
+        }
+        await venueDetails.save();
+        return response.json({ message: "Images saved", status: true });
+    } catch (err) {
         console.log(err);
-        return response.json({ error: "internal server error", status: false })
+        return response.status(500).json({ error: "Internal server error", status: false });
     }
-}
+};
+
 
 export const topList = async (request, response, next) => {
     try {
@@ -163,10 +156,10 @@ export const byCategory = async (request, response, next) => {
 
 export const byCapacity = async (request, response, next) => {
     try {
-        let venueDetails = await VenueDetails.find({ 
-            $and:[
-                {capacity:{$gt:request.body.first}},
-                {capacity:{$lte:request.body.second}}
+        let venueDetails = await VenueDetails.find({
+            $and: [
+                { capacity: { $gt: request.body.first } },
+                { capacity: { $lte: request.body.second } }
             ]
         })
         return response.status(200).json({ venueList: venueDetails, status: true })
@@ -180,10 +173,10 @@ export const byCapacity = async (request, response, next) => {
 
 export const byCharges = async (request, response, next) => {
     try {
-        let venueDetails = await VenueDetails.find({ 
-            $and:[
-                {charges:{$gt:request.body.firstPrice}},
-                {charges:{$lte:request.body.secondPrice}}
+        let venueDetails = await VenueDetails.find({
+            $and: [
+                { charges: { $gt: request.body.firstPrice } },
+                { charges: { $lte: request.body.secondPrice } }
             ]
         })
         return response.status(200).json({ venueList: venueDetails, status: true })

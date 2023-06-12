@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Shivendra-007/VivahVyawasthaByMongo#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "express-gateway": "^1.16.11",
     "fast-gateway": "^3.4.5"
   }
 }

@@ -10,7 +10,7 @@ export const savemehandi = async (request, response, next) => {
             return response.status(400).json({ error: "bad request", status: true });
 
         const mehandi = await Mehandi.create(request.body.mehandi);
-        return response.status(200).json({ message: "venue details saved", status: true });
+        return response.status(200).json({ message: "mehandi details saved", status: true });
     }
     catch (err) {
         console.log(err);

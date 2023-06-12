@@ -3,10 +3,10 @@ import { byVenueId, cancel, removeBooking, saveBooking } from "../controller/boo
 
 const router = express.Router();
 
-router.post("/saveBooking",saveBooking);
-router.post("/byVenueId",byVenueId);
-router.post("/remove",removeBooking);
-router.post('/cancel',cancel);
+router.post("/saveBooking", saveBooking);
+router.post("/byVenueId", byVenueId);
+router.post("/remove", removeBooking);
+router.post('/cancel', cancel);
 
 
 export default router;

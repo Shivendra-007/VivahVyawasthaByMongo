@@ -16,7 +16,7 @@ const caterersSchema = new mongoose.Schema({
         service: { type: String, required: true },
         price: { type: Number, required: true }, 
     }],
-    images: [],
+     Menueimages: [],
     vendorId: { type: String, required: true },
     premium: {
         type: String,

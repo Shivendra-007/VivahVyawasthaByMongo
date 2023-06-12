@@ -11,11 +11,11 @@ router.post("/add",
   body("typeOfEvent").notEmpty(),
   body("checkIn").notEmpty(),
   body("checkOut").notEmpty(),
-  body("customerId").notEmpty(),
-add);
+  body("customerId").notEmpty(),add);
 router.post("/byVenueId",byvenueId);
 
-router.post("/remove",remove);
+router.post("/remove/:_id",remove);
+
 router.post('/confirm',confirm);
 
 export default router;

@@ -49,14 +49,28 @@ export const confirm = async (request, response, next) => {
     }
 }
 
+// export const remove = async (request, response, next) => {
+//     try {
+//         let requests = await Request.findByIdAndDelete(request.body._id)
+//         if (requests)
+//             return response.status(200).json({ message: "request remove successfully", status: true })
+//         return response.status(400).json({ error: "request resorses not found", status: false })
+//     }
+//     catch (err) {
+//         return response.status(500).json({ error: "internal server error", status: false })
+//     }
+// }
 export const remove = async (request, response, next) => {
+    console.log(request.params._id)
     try {
-        let requests = await Request.findByIdAndDelete(request.body._id)
+        const id = request.params._id
+        let requests = await Request.findByIdAndDelete(id)
         if (requests)
             return response.status(200).json({ message: "request remove successfully", status: true })
         return response.status(400).json({ error: "request resorses not found", status: false })
     }
     catch (err) {
+        console.log(err);
         return response.status(500).json({ error: "internal server error", status: false })
     }
 }

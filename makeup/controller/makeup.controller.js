@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import Makeup from "../models/makeup.model.js";
 
 
-export const savemakeup = (request, response, next) => {
+export const savemakeup= (request, response, next) => {
     console.log("data savesd")
     try {
         console.log(request.files);
@@ -14,10 +14,10 @@ export const savemakeup = (request, response, next) => {
             else
                 thumbnail = file.path
         });
-
-        Makeup.create(request.body)
+              
+        let { title, description, price, address, rating, longitude, latitude, service, experience, contactNumber } = request.body
+      Makeup.create(({ images: images, thumbnail: thumbnail, price: price, title: title, description: description, address: address, rating: rating, longitude: longitude, latitude: latitude, service: service, experience: experience, contactNumber: contactNumber }))
         return response.status(200).json({ message: "saved...", status: true });
-
     }
     catch (err) {
         console.log(err);

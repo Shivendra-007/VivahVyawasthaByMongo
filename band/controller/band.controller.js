@@ -3,7 +3,7 @@ import Band from "../models/band.model.js";
 
 
 
-export const save = async (request, response, next) => {
+export const saveBand = async (request, response, next) => {
     console.log(request.body.band)
     try {
         const errors = await validationResult(request.body.band);

@@ -1,6 +1,7 @@
 import express from "express";
 import {  search,  viewAll ,viewById, savetent, activatetent, activetentList, removeById} from "../controller/tent.controller.js";
 import { body } from "express-validator";
+import multer from "multer";
 const router = express.Router();
 const uploads = multer({ dest: "public/Images/" });
 router.post("/save",

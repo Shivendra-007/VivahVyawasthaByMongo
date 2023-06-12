@@ -1,3 +1,6 @@
+
+
+
 import mongoose from "mongoose";
 
 const venueDetailsSchema = new mongoose.Schema({
@@ -50,7 +53,7 @@ const venueDetailsSchema = new mongoose.Schema({
     latitude: {
         type: Number,
         required: false
-    },
+    },  
     images: {
         type: []
 
@@ -82,7 +85,6 @@ const venueDetailsSchema = new mongoose.Schema({
         VegPrice: { type: Number },
         Menueimage: { type: [] }
     },
-    // facility:[] 
 })
 
 export const VenueDetails = mongoose.model("venueDetail", venueDetailsSchema)
