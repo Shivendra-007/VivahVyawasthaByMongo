@@ -44,8 +44,7 @@ export const saveBuggy=async(request,response,next)=>{
 export const viewAll = (request, response, next) => {
     Buggy.find()
         .then(result => {
-            console.log(result);
-            return response.status(200).json({ BuggyDetails: result, status: true });
+            return response.status(200).json({ buggyDetails: result, status: true });
         })
         .catch(err => {
             console.log(err);
@@ -76,12 +75,11 @@ export const search = (request, response, next) => {
     Buggy.find({
         $or: [
             { address: { $regex: request.params.keyword, $options: 'i' } },
-            { companyName: { $regex: request.params.keyword, $options: 'i' } },
-            { category: { $regex: request.params.keyword, $options: 'i' } },
+            { title: { $regex: request.params.keyword, $options: 'i' } },
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ Band: result, message: "Search Band", status: true });
+        return response.status(200).json({ BandList: result, message: "Search Band", status: true });
     }).catch((err) => {
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })

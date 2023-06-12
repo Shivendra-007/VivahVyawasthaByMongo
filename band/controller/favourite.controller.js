@@ -9,7 +9,8 @@ export const addFavourite=async(request,response,next)=>{
         if(!errors.isEmpty())
          return response.status(400).json({error:"bad request",status:true});
          const band=await Favourite.create(request.body);
-          return response.status(200).json({message:"Add to favourite",status:true});
+         const favouriteList=await Favourite.find({customerId:request.body.customerId})
+          return response.status(200).json({favouriteList:favouriteList,message:"Add to favourite",status:true});
         }
         catch(err)
         {
@@ -22,7 +23,7 @@ export const addFavourite=async(request,response,next)=>{
 export const byCustomerId=(request,response,next)=>{
     Favourite.find({customerId: request.params.customerId})
     .populate("venueId").then(result=>{
-        return response.status(200).json(result);
+        return response.status(200).json({favouriteList:result,status:true});
     }).catch(err=>{
         console.log(err);
         return response.status(500).json({error: "Internal server error"});
@@ -32,13 +33,17 @@ export const byCustomerId=(request,response,next)=>{
 
 export const removeFromFavourite= async(request,response,next)=>{
     try{
-        let requests= await Favourite.findByIdAndDelete(request.body._id)
-         if(requests)
-         return response.status(200).json({message:"favourite remove successfully",status:true})
-         return response.status(400).json({error:"request resorses not found",status:false})
-     }
-     catch(err)
-     {
-         return response.status(500).json({error:"internal server error",status:false})
-     }
+        let bands=await Favourite.findOne(request.body)
+        if(!bands)
+        return response.status(400).json({ error: "request resorses not found", status: false })
+        let requests = await Favourite.findByIdAndDelete(bands._id)
+        if (requests){
+            let favouriteList=await Favourite.find({customerId:request.body.customerId})
+            return response.status(200).json({ favouriteList:favouriteList, message: "favourite remove successfully", status: true })
+        }
+            return response.status(400).json({ error: "request resorses not found", status: false })
+    }
+    catch (err) {
+        return response.status(500).json({ error: "internal server error", status: false })
+    }
 }

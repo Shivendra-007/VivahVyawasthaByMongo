@@ -1,10 +1,16 @@
 import express from "express";
-import {  remove, viewAll, addFavourite } from "../controller/favourite.controller.js";
+import { viewAll, addFavourite, removeFromFavourite } from "../controller/favourite.controller.js";
+import {body} from "express-validator";
+
 let router = express.Router();
 
-router.post("/save", addFavourite);
-router.post("/viewBycustomer", viewAll);
-router.delete("/remove/:id", remove);
+
+router.post("/addFavourite",
+body("customerId").notEmpty(),
+body("venueId").notEmpty(),
+addFavourite);
+router.get("/viewByCustomer", viewAll);
+router.post("/remove",removeFromFavourite);
 
 
 export default router;

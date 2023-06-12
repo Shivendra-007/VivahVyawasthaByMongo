@@ -22,7 +22,7 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/bug
     });
 
 
-app.use("/bughi", bughiRouter);
+app.use("/", bughiRouter);
 app.use("/feedback", feedbackRouter);
 app.use("/favourite", favouriteRouter);
 app.use("/request", requestRouter);

@@ -48,7 +48,7 @@ export const save = async (request, response, next) => {
 export const viewAll = (request, response, next) => {
     Photographer.find()
         .then(result => {
-            console.log(result);
+           
             return response.status(200).json({ photographers: result, status: true });
         })
         .catch(err => {
@@ -144,5 +144,42 @@ export const removeById=async(request,response,next)=>{
     catch(err)
     {
         return response.status(500).json({error:"internal server error",status:false});
+    }
+}
+
+export const byPrice = async (request, response, next) => {
+
+    try {
+        let photographers = await Photographer.find();
+      let photographer=photographers.filter((photographer,index)=>{ 
+         return (photographer.services[0].price>=request.body.firstPrice&& photographer.services[0].price<=request.body.secondPrice)
+     });
+         return response.status(200).json({photogrpherList: photographer, status: true })
+    }
+    catch (err) {
+
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+export const byService = async (request, response, next) => {
+   
+    try {
+        let photographers = await Photographer.find();
+        let select = [];
+    
+      let photographer=photographers.map((photographer,index)=>{ 
+        photographer.services.map((service)=>{
+            if(service.service.toLowerCase()==request.body.serviceName.toLowerCase())
+                select.push(photographer)
+            
+        })
+        
+     });
+                 return response.status(200).json({ photographerList: select, status: true })
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "internal server error", status: false });
     }
 }

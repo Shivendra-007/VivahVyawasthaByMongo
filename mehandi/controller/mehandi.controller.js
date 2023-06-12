@@ -47,8 +47,8 @@ export const savemehandi = async (request, response, next) => {
 export const viewAll = (request, response, next) => {
     Mehandi.find()
         .then(result => {
-            console.log(result);
-            return response.status(200).json({ mehandiDetails: result, status: true });
+            
+            return response.status(200).json({ mehandiList: result, status: true });
         })
         .catch(err => {
             console.log(err);
@@ -79,13 +79,13 @@ export const search = (request, response, next) => {
     Mehandi.find({
         $or: [
             { address: { $regex: request.params.keyword, $options: 'i' } },
-            { companyName: { $regex: request.params.keyword, $options: 'i' } },
-            { category: { $regex: request.params.keyword, $options: 'i' } },
+            { title: { $regex: request.params.keyword, $options: 'i' } },
             { description: { $regex: request.params.keyword, $options: 'i' } }
         ]
     }).then(result => {
-        return response.status(200).json({ mehandi: result, message: "Search mehandi", status: true });
+        return response.status(200).json({ mehandiList: result, message: "Search mehandi", status: true });
     }).catch((err) => {
+        console.log(err);
         return response.status(500).json({ error: "Internal Server Error", status: false });
     })
 }
@@ -146,7 +146,7 @@ export const removeById = async (request, response, next) => {
 export const topList = (request, response, next) => {
     Mehandi.find().limit(10)
         .then(result => {
-            console.log(result);
+            
             return response.status(200).json({ mehandiDetails: result, status: true });
         })
         .catch(err => {
@@ -154,3 +154,40 @@ export const topList = (request, response, next) => {
             return response.status(500).json({ Message: "Internal Server error...", status: false });
         });
 };
+
+export const byPrice = async (request, response, next) => {
+
+    try {
+        let mehandis = await Mehandi.find();
+      let mehandi=mehandis.filter((mehandi,index)=>{ 
+         return (mehandi.services[0].price>=request.body.firstPrice&& mehandi.services[0].price<=request.body.secondPrice)
+     });
+         return response.status(200).json({ mehandiList: mehandi, status: true })
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}
+
+export const byService = async (request, response, next) => {
+    console.log(request.body.serviceName+" djfksdf")
+    try {
+        let mehandis = await Mehandi.find();
+        let select = [];
+    
+      let mehandi=mehandis.map((mehandi,index)=>{ 
+        mehandi.services.map((service)=>{
+            if(service.service.toLowerCase()==request.body.serviceName.toLowerCase())
+                select.push(mehandi)
+            
+        })
+        
+     });
+                 return response.status(200).json({ mehandiList: select, status: true })
+    }
+    catch (err) {
+        console.log(err);
+        return response.status(500).json({ error: "internal server error", status: false });
+    }
+}

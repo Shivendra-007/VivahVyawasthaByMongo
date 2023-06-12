@@ -141,13 +141,8 @@ export const byPrice = async (request, response, next) => {
     console.log(request.body)
     try {
         let makeups = await Makeup.find();
-    
-    
       let make=makeups.filter((makeup,index)=>{ 
          return (makeup.services[0].price>=request.body.firstPrice&& makeup.services[0].price<=request.body.secondPrice)
-      
-        
-    
      });
          return response.status(200).json({ makeupList: make, status: true })
     }

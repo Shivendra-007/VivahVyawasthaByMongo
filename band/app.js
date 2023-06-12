@@ -26,7 +26,7 @@ mongoose.connect("mongodb+srv://Dream:dreamepic@cluster0.ea17dov.mongodb.net/Ban
     });
 
 
-app.use("/saveband", bandRouter);
+app.use("/", bandRouter);
 app.use("/feedback", feedbackRouter);
 app.use("/favourite", favouriteRouter);
 app.use("/request", requestRouter);

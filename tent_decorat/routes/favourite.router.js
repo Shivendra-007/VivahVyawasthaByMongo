@@ -3,7 +3,7 @@ import { addFavourite, byCustomerId, removeFromFavourite } from "../controller/f
 let router = express.Router();
 
 router.post("/addFavourite",addFavourite)
-router.get("/byCustomerId/:customerId",byCustomerId)
+router.get("/viewByCustomer/:customerId",byCustomerId)
 router.post("/remove",removeFromFavourite)
 
 
