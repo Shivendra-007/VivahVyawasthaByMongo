@@ -34,6 +34,11 @@ const requestSchema=new mongoose.Schema({
         type:mongoose.Schema. Types.ObjectId,
         ref:"VenueDetails"
     },
+    date: {
+        type: String,
+        required: true,
+        default: new Date().toString().substring(4, 15).replaceAll(' ', '-')
+    }
 
     
 

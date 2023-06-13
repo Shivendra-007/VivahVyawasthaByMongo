@@ -103,23 +103,29 @@ export const activeList = async (request, response, next) => {
 }
 
 export const saveImages = async (request, response, next) => {
+    console.log(request.body)
+    console.log(request.files);
     try {
-        let venue = await find({ _id: request.params.id })
-        if (!venue)
-            return response.status(404).json({ error: "request resorses not found", status: false })
-
-        await (request.body.image).map((img, index) => {
-            venue.images.push(img)
-        })
-        venue.save();
-        return response.json({ message: "images save", status: true })
-
+      const venueDetails = await VenueDetails.findOne({ venueDetailsId: request.body._id}); 
+      console.log("data transfer")
+      if (!venueDetails) {
+        return response.status(404).json({ error: "Requested resource not found", status: false });
+      }
+      console.log("Data passed");
+      if (Array.isArray(request.files)) {
+        request.files.forEach((file) => {
+          if (file.fieldname !== "files") {
+     venueDetails.images.push(file.path);
+          }
+        });
+      }
+      await venueDetails.save();
+      return response.json({ message: "Images saved", status: true });
+    } catch (err) {
+      console.log(err);
+      return response.status(500).json({ error: "Internal server error", status: false });
     }
-    catch (err) {
-        console.log(err);
-        return response.json({ error: "internal server error", status: false })
-    }
-}
+  };
 
 export const topList = async (request, response, next) => {
     try {
